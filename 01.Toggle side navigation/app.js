@@ -5,7 +5,7 @@ const controlView = (() => {
 
   const initRender = () => {
     // prettier-ignore
-    isOpened = JSON.parse(window.localStorage.getItem('open-status')) ?? isOpened;
+    isOpened = JSON.parse(localStorage.getItem('open-status')) ?? isOpened;
 
     $nav.classList.toggle('active', isOpened);
     document.body.style.visibility = 'visible';
@@ -18,7 +18,7 @@ const controlView = (() => {
   const toggleNavBar = () => {
     $nav.classList.toggle('active');
     isOpened = !isOpened;
-    window.localStorage.setItem('open-status', isOpened);
+    localStorage.setItem('open-status', isOpened);
   };
 
   return (e) => {
