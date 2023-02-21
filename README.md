@@ -1,4 +1,4 @@
-# **🧑‍🤝‍🧑 Pair Programming 2*
+# **🧑‍🤝‍🧑 Pair Programming 2**
 
 **[김동규's github](https://github.com/5kdk)**
 
