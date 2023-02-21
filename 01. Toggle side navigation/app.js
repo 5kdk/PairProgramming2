@@ -21,7 +21,7 @@ const controlView = (() => {
     localStorage.setItem('open-status', isOpened);
   };
 
-  return (e) => {
+  return e => {
     if (e.type === 'DOMContentLoaded') initRender();
     else toggleNavBar();
   };
