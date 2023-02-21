@@ -1,4 +1,5 @@
 /* eslint-disable no-new */
+// eslint-disable-next-line import/extensions
 import Accordion from './Accordion.js';
 
 const menuList = [
@@ -35,4 +36,4 @@ const menuList = [
 ];
 
 new Accordion({ $container: document.getElementById('accordion1'), menuList });
-new Accordion({ $container: document.getElementById('accordion2'), menuList, showMultiple: true,});
+new Accordion({ $container: document.getElementById('accordion2'), menuList, showMultiple: true });
