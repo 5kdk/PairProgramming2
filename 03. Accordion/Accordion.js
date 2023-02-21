@@ -1,10 +1,12 @@
 class Accordion {
   constructor({ $container, menuList, showMultiple = false }) {
-    this.state = {
+    this.props = {
       $container,
       menuList,
       showMultiple,
     };
+
+    this.state = { menuList: [...this.props.menuList] };
 
     window.addEventListener('DOMContentLoaded', () => {
       this.intialize();
@@ -15,17 +17,17 @@ class Accordion {
     });
   }
 
-  setState(newState = this.state) {
+  setState(newState) {
     this.state = { ...this.state, ...newState };
     this.render();
   }
 
   intialize() {
-    if (this.state.showMultiple) {
-      this.setState();
+    if (this.props.showMultiple) {
+      this.setState(this.state);
     } else {
-      const firstTrueIdx = this.state.menuList.findIndex(menu => menu.isOpen);
-      const newMenuList = this.state.menuList.map((menu, idx) =>
+      const firstTrueIdx = this.props.menuList.findIndex(menu => menu.isOpen);
+      const newMenuList = this.props.menuList.map((menu, idx) =>
         idx === firstTrueIdx ? menu : { ...menu, isOpen: false }
       );
 
@@ -35,11 +37,13 @@ class Accordion {
 
   // prettier-ignore
   toggleMenu({ target }) {
+    if (!target.closest('h1')) return;
+
     const { id } = target.closest('article').dataset;
 
     const newMenuList = this.state.menuList.map(menu => menu.id === +id
       ? { ...menu, isOpen: !menu.isOpen }
-      : this.state.showMultiple
+      : this.props.showMultiple
       ? menu
       : { ...menu, isOpen: false }
     );
@@ -49,7 +53,7 @@ class Accordion {
 
   // prettier-ignore
   render() {
-    this.state.$container.innerHTML = `
+    this.props.$container.innerHTML = `
       <div class='accordion-container'>
       ${this.state.menuList.map(({ id, title, subMenu, isOpen }) =>
         `<article data-id='${id}' class=${isOpen? 'active' : ''}>
