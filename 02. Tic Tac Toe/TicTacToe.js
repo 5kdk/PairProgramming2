@@ -20,10 +20,9 @@ const TicTacToe = $container => {
   // prettier-ignore
   const render = () => {
     state.isDraw = state.board.every(user => user !== '');
-    
-    for(const [one, two, three] of winConditions) {
-      if (state.board[one] && state.board[one] === state.board[two] && state.board[two] === state.board[three]) state.isTicTacToe = true;
-    };
+    state.isTicTacToe = winConditions.some(([one, two, three]) => 
+      state.board[one] && state.board[one] === state.board[two] && state.board[two] === state.board[three]
+    );
 
     const { player, board, isDraw, isTicTacToe } = state;
     
@@ -31,22 +30,28 @@ const TicTacToe = $container => {
       <h1 class="title">Tic Tac Toe</h1>
       <div class="game">
         <div class="game-status">${
-          isDraw
-            ? 'Draw'
-            : isTicTacToe
+          isTicTacToe
             ? `Winner is ${player === 'O' ? 'X' : 'O'}`
+            : isDraw
+            ? 'Draw'
             : `Next Player: ${player}`
         }</div>
         <div class="game-grid">
-          ${board.map((player, id) =>
-            `<div class="game-grid-item" data-id="${id}">${player}</div>`
-          ).join('')}
+        ${board.map((player, id) =>
+          `<div class="game-grid-item" data-id="${id}">${player}</div>`).join('')}
         </div>
         <button class="game-reset">Try again?</button>
       </div>`;
   };
 
-  const setState = newState => {
+  const setState = (
+    newState = {
+      player: 'X',
+      board: new Array(9).fill(''),
+      isDraw: false,
+      isTicTacToe: false,
+    }
+  ) => {
     state = { ...state, ...newState };
     render();
   };
@@ -54,27 +59,20 @@ const TicTacToe = $container => {
   const play = id => {
     if (state.isDraw || state.isTicTacToe) return;
 
-    let board = state.board;
+    const { board } = state;
     board[id] = state.player;
 
     setState({ board, player: state.player === 'X' ? 'O' : 'X' });
   };
 
-  // at initial load
   window.addEventListener('DOMContentLoaded', render);
 
-  // each play
+  // prettier-ignore
   window.addEventListener('click', e => {
-    if (!e.target.classList.contains('game-grid-item') || e.target.textContent) return;
+    if (!e.target.matches('.game-grid-item, .game-reset')) return;
 
-    play(e.target.dataset.id);
-  });
-
-  // reset button
-  window.addEventListener('click', e => {
-    if (!e.target.classList.contains('game-reset')) return;
-
-    setState({ player: 'X', board: new Array(9).fill(''), isDraw: false, isTicTacToe: false });
+    if (e.target.classList.contains('game-grid-item')) play(e.target.dataset.id);
+    else setState();
   });
 };
 
