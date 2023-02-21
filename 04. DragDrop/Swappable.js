@@ -1,13 +1,14 @@
 // https://githut.info
 const languages = ['JavaScript', 'Java', 'Python', 'CSS', 'PHP', 'Ruby', 'C++', 'C', 'Shell', 'C#'];
 
-// do !something
+// do something!
 const Swappable = $container => {
-  let dragIdx = 0;
-  let dropIdx = 0;
   let state = {
     current: [...languages],
   };
+
+  let dragIdx = 0;
+  let dropIdx = 0;
 
   // prettier-ignore
   const render = () => {
@@ -29,7 +30,7 @@ const Swappable = $container => {
     render();
   };
 
-  const initialize = () => {
+  const initShuffle = () => {
     let randomNum = Math.floor(Math.random() * state.current.length);
     let randomized = [];
 
@@ -42,15 +43,15 @@ const Swappable = $container => {
     setState({ current: randomized });
   };
 
-  const changeIdx = () => {
-    const temp = [...state.current];
-    temp[dragIdx] = state.current[dropIdx];
-    temp[dropIdx] = state.current[dragIdx];
+  const swapRank = () => {
+    const swapped = [...state.current];
+    swapped[dragIdx] = state.current[dropIdx];
+    swapped[dropIdx] = state.current[dragIdx];
 
-    setState({ current: temp });
+    setState({ current: swapped });
   };
 
-  window.addEventListener('DOMContentLoaded', initialize);
+  window.addEventListener('DOMContentLoaded', initShuffle);
 
   $container.addEventListener('dragstart', e => {
     if (e.target.closest('li')) dragIdx = state.current.indexOf(e.target.firstElementChild.textContent);
@@ -69,12 +70,10 @@ const Swappable = $container => {
   });
 
   $container.addEventListener('drop', e => {
-    e.preventDefault();
-
     e.target.closest('li').classList.remove('over');
     dropIdx = state.current.indexOf(e.target.firstElementChild.textContent);
 
-    changeIdx();
+    swapRank();
   });
 };
 
