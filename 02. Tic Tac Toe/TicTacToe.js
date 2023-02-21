@@ -44,19 +44,18 @@ const TicTacToe = $container => {
       </div>`;
   };
 
-  const setState = (
-    newState = {
-      player: 'X',
-      board: new Array(9).fill(''),
-      isDraw: false,
-      isTicTacToe: false,
-    }
-  ) => {
+  // prettier-ignore
+  const setState = (newState = {
+    player: 'X',
+    board: new Array(9).fill(''),
+    isDraw: false,
+    isTicTacToe: false,
+  }) => {
     state = { ...state, ...newState };
     render();
   };
 
-  const play = id => {
+  const placeTurn = id => {
     if (state.isDraw || state.isTicTacToe) return;
 
     const { board } = state;
@@ -71,7 +70,7 @@ const TicTacToe = $container => {
   window.addEventListener('click', e => {
     if (!e.target.matches('.game-grid-item, .game-reset')) return;
 
-    if (e.target.classList.contains('game-grid-item')) play(e.target.dataset.id);
+    if (e.target.classList.contains('game-grid-item')) placeTurn(e.target.dataset.id);
     else setState();
   });
 };
