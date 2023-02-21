@@ -1,8 +1,6 @@
 class Accordion {
-  #state;
-
   constructor({ $container, menuList, showMultiple = false }) {
-    this.#state = {
+    this.state = {
       $container,
       menuList,
       showMultiple,
@@ -17,17 +15,17 @@ class Accordion {
     });
   }
 
-  setState(newState = this.#state) {
-    this.#state = { ...this.#state, ...newState };
+  setState(newState = this.state) {
+    this.state = { ...this.state, ...newState };
     this.render();
   }
 
   intialize() {
-    if (this.#state.showMultiple) {
+    if (this.state.showMultiple) {
       this.setState();
     } else {
-      const firstTrueIdx = this.#state.menuList.findIndex(menu => menu.isOpen);
-      const newMenuList = this.#state.menuList.map((menu, idx) =>
+      const firstTrueIdx = this.state.menuList.findIndex(menu => menu.isOpen);
+      const newMenuList = this.state.menuList.map((menu, idx) =>
         idx === firstTrueIdx ? menu : { ...menu, isOpen: false }
       );
 
@@ -39,9 +37,9 @@ class Accordion {
   toggleMenu({ target }) {
     const { id } = target.closest('article').dataset;
 
-    const newMenuList = this.#state.menuList.map(menu => menu.id === +id
+    const newMenuList = this.state.menuList.map(menu => menu.id === +id
       ? { ...menu, isOpen: !menu.isOpen }
-      : this.#state.showMultiple
+      : this.state.showMultiple
       ? menu
       : { ...menu, isOpen: false }
     );
@@ -51,9 +49,9 @@ class Accordion {
 
   // prettier-ignore
   render() {
-    this.#state.$container.innerHTML = `
+    this.state.$container.innerHTML = `
       <div class='accordion-container'>
-      ${this.#state.menuList.map(({ id, title, subMenu, isOpen }) =>
+      ${this.state.menuList.map(({ id, title, subMenu, isOpen }) =>
         `<article data-id='${id}' class=${isOpen? 'active' : ''}>
           <h1><i class='bx bxs-chevron-down'></i>${title}</h1>
             <ul>
