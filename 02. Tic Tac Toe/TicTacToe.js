@@ -55,11 +55,11 @@ const TicTacToe = $container => {
     render();
   };
 
-  const placeTurn = id => {
-    if (state.isDraw || state.isTicTacToe) return;
+  const placeTurn = ({ dataset, textContent }) => {
+    if (state.isDraw || state.isTicTacToe || textContent) return;
 
     const { board } = state;
-    board[id] = state.player;
+    board[dataset.id] = state.player;
 
     setState({ board, player: state.player === 'X' ? 'O' : 'X' });
   };
@@ -70,7 +70,7 @@ const TicTacToe = $container => {
   window.addEventListener('click', e => {
     if (!e.target.matches('.game-grid-item, .game-reset')) return;
 
-    if (e.target.classList.contains('game-grid-item')) placeTurn(e.target.dataset.id);
+    if (e.target.classList.contains('game-grid-item')) placeTurn(e.target);
     else setState();
   });
 };
