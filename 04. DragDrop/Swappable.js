@@ -62,15 +62,19 @@ const Swappable = $container => {
   });
 
   $container.addEventListener('dragenter', e => {
-    if (e.target.closest('li')) e.target.closest('li').classList.toggle('over');
+    if (!e.target.matches('.draggable') || !e.target.closest('li')) return;
+
+    e.target.closest('li').classList.toggle('over');
   });
 
   $container.addEventListener('dragleave', e => {
-    if (e.target.closest('li')) e.target.closest('li').classList.toggle('over');
+    if (!e.target.matches('.draggable') || !e.target.closest('li')) return;
+
+    e.target.closest('li').classList.toggle('over');
   });
 
   $container.addEventListener('drop', e => {
-    e.target.closest('li').classList.remove('over');
+    if (e.target.matches('.draggable')) e.target.closest('li').classList.remove('over');
     dropIdx = state.current.indexOf(e.target.firstElementChild.textContent);
 
     swapRank();
