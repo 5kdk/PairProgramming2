@@ -13,6 +13,7 @@ class Accordion {
     });
 
     $container.addEventListener('click', e => {
+      if (!e.target.closest('h1')) return;
       this.toggleMenu(e);
     });
   }
@@ -37,8 +38,6 @@ class Accordion {
 
   // prettier-ignore
   toggleMenu({ target }) {
-    if (!target.closest('h1')) return;
-
     const { id } = target.closest('article').dataset;
 
     const newMenuList = this.state.menuList.map(menu => menu.id === +id
