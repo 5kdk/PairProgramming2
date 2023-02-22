@@ -31,6 +31,7 @@ const AnalogClock = $container => {
     $container.querySelector('.hand.second').style.setProperty('--deg', secDegree * 360);
   };
 
+  tick();
   setInterval(tick, 1000);
 };
 
