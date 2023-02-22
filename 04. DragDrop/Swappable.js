@@ -74,7 +74,9 @@ const Swappable = $container => {
   });
 
   $container.addEventListener('drop', e => {
-    if (e.target.matches('.draggable')) e.target.closest('li').classList.remove('over');
+    if (e.target.matches('.draggable')) return;
+
+    e.target.closest('li').classList.remove('over');
     dropIdx = state.current.indexOf(e.target.firstElementChild.textContent);
 
     swapRank();
