@@ -1,10 +1,48 @@
+// eslint-disable-next-line import/extensions
 import TreeView from './tree-view/index.js';
 
 /**
  * mock data
  */
 const tree = [
-  /* do something! */
+  { name: 'Home' },
+  {
+    name: 'Drinks',
+    isOpen: false,
+    children: [
+      {
+        name: 'Coffee',
+        isOpen: false,
+        children: [
+          {
+            name: 'Americano',
+            isOpen: false,
+            children: [{ name: 'Red Eye' }, { name: 'Long Black' }, { name: 'French' }],
+          },
+          { name: 'Cappuccino' },
+          { name: 'Espresso' },
+        ],
+      },
+      {
+        name: 'Tea',
+        isOpen: false,
+        children: [{ name: 'Green Tea' }, { name: 'Black Tea' }],
+      },
+    ],
+  },
+  {
+    name: 'Fruit',
+    isOpen: false,
+    children: [
+      { name: 'Apple' },
+      {
+        name: 'Berry',
+        isOpen: false,
+        children: [{ name: 'Strawberry' }, { name: 'Blackberry' }, { name: 'Cranberry' }],
+      },
+      { name: 'Banana' },
+    ],
+  },
 ];
 
 const treeView = new TreeView(document.getElementById('tree-navigation'), tree);
