@@ -4,9 +4,8 @@ class TreeView {
     this.$container = $container;
     this.tree = tree;
 
-    window.addEventListener('DOMContentLoaded', () => {
-      this.initialize();
-    });
+    this.addClickReplacer();
+    this.initialize();
   }
 
   initialize() {
@@ -20,8 +19,8 @@ class TreeView {
   createDOMString({ name, children, isOpen }) {
     return `
       <li class="tree-node">
-        <a href="#" data-name="${name}" data-event-type="${ !children ? 'select' : isOpen ? 'expand' : 'collapse'}">
-          <span class="tree-switcher ${ !children ? 'noop' : isOpen ? 'expand' : 'collapse'}"></span>
+        <a href="#" data-name="${name}" data-event-type="${!children ? 'select' : isOpen ? 'collapse' : 'expand'}">
+          <span class="tree-switcher ${!children ? 'noop' : isOpen ? 'expand' : 'collapse'}"></span>
           <span class="tree-content">${name}</span>
         </a>
         ${children ? children.map(item => `
@@ -31,11 +30,39 @@ class TreeView {
       </li>`
   }
 
-  on(eventType, e) {
-    if (eventType === 'collapse') this.handleCollapse(e);
-    if (eventType === 'select') this.handleSelect(e);
-    if (eventType === 'expand') this.handleExpand(e);
+  on(eventType, eventHandler) {
+    if (!['collapse', 'expand', 'select'].includes(eventType)) throw new Error('잘못된 이벤트입니다.');
+
+    this.$container.addEventListener(eventType, e => {
+      if (e.detail.eventType === 'expand' || e.detail.eventType === 'collapse') {
+        this.tree = this.traverseAndToggle(this.tree, e.detail.name);
+        this.initialize();
+      }
+
+      eventHandler(e);
+    });
+  }
+
+  addClickReplacer() {
+    this.$container.addEventListener('click', e => {
+      if (!e.target.closest('a')) return;
+      const $a = e.target.closest('a');
+      const { name, eventType } = $a.dataset;
+
+      const customEvent = new CustomEvent(eventType, { detail: { name, eventType } });
+      this.$container.dispatchEvent(customEvent);
+    });
+  }
+
+  // prettier-ignore
+  traverseAndToggle(targetArray, targetName) {
+    return targetArray.map(({ name, isOpen, children }) =>
+      name === targetName
+        ? { name, isOpen: !isOpen, children: children ? this.traverseAndToggle(children, targetName) : children }
+        : { name, isOpen, children: children ? this.traverseAndToggle(children, targetName) : children }
+    );
   }
 }
 
 export default TreeView;
+
