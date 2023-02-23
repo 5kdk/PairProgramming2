@@ -59,10 +59,12 @@ const Swappable = $container => {
   });
 
   $container.addEventListener('dragenter', e => {
+    e.preventDefault();
     if (e.target.closest('li')) e.target.closest('li').classList.toggle('over');
   });
 
   $container.addEventListener('dragleave', e => {
+    e.preventDefault();
     if (e.target.closest('li')) e.target.closest('li').classList.toggle('over');
   });
 
