@@ -4,15 +4,32 @@ class TreeView {
     this.$container = $container;
     this.tree = tree;
 
-    this.addClickReplacer();
-    this.initialize();
+    window.addEventListener('DOMContentLoaded', () => this.render());
+
+    $container.addEventListener('click', e => {
+      if (!e.target.closest('a')) return;
+
+      const { name, eventType } = e.target.closest('a').dataset;
+      const customEvent = new CustomEvent(eventType, { detail: { name, eventType } });
+
+      $container.dispatchEvent(customEvent);
+    });
+
+    ['collapse', 'expand'].forEach(eventType =>
+      $container.addEventListener(eventType, e => this.setTree(this.traverseToggle(this.tree, e.detail.name)))
+    );
   }
 
-  initialize() {
+  setTree(newTree) {
+    this.tree = newTree;
+    this.render();
+  }
+
+  render() {
     this.$container.innerHTML = `
-    <ul class="tree-container">
-    ${this.tree.map(item => this.createDOMString(item)).join('')}
-    </ul>`;
+      <ul class="tree-container">
+        ${this.tree.map(node => this.createDOMString(node)).join('')}
+      </ul>`;
   }
 
   // prettier-ignore
@@ -23,46 +40,26 @@ class TreeView {
           <span class="tree-switcher ${!children ? 'noop' : isOpen ? 'expand' : 'collapse'}"></span>
           <span class="tree-content">${name}</span>
         </a>
-        ${children ? children.map(item => `
+        ${children ? children.map(node => `
         <ul class="subtree-container ${isOpen ? '' : 'hide'}">
-          ${this.createDOMString(item)}
+          ${this.createDOMString(node)}
         </ul>`).join('') : ''}
       </li>`
   }
 
   on(eventType, eventHandler) {
-    if (!['collapse', 'expand', 'select'].includes(eventType)) throw new Error('잘못된 이벤트입니다.');
+    if (!['collapse', 'expand', 'select'].includes(eventType)) throw new Error('Wrong custom event.');
 
-    this.$container.addEventListener(eventType, e => {
-      if (e.detail.eventType === 'expand' || e.detail.eventType === 'collapse') {
-        this.tree = this.traverseAndToggle(this.tree, e.detail.name);
-        this.initialize();
-      }
-
-      eventHandler(e);
-    });
-  }
-
-  addClickReplacer() {
-    this.$container.addEventListener('click', e => {
-      if (!e.target.closest('a')) return;
-      const $a = e.target.closest('a');
-      const { name, eventType } = $a.dataset;
-
-      const customEvent = new CustomEvent(eventType, { detail: { name, eventType } });
-      this.$container.dispatchEvent(customEvent);
-    });
+    this.$container.addEventListener(eventType, eventHandler);
   }
 
   // prettier-ignore
-  traverseAndToggle(targetArray, targetName) {
-    return targetArray.map(({ name, isOpen, children }) =>
-      name === targetName
-        ? { name, isOpen: !isOpen, children: children ? this.traverseAndToggle(children, targetName) : children }
-        : { name, isOpen, children: children ? this.traverseAndToggle(children, targetName) : children }
+  traverseToggle(elements, targetName) {
+    return elements.map(({ name, isOpen, children }) => name === targetName
+      ? { name, isOpen: !isOpen, children: children ? this.traverseToggle(children, targetName) : children }
+      : { name, isOpen, children: children ? this.traverseToggle(children, targetName) : children }
     );
   }
 }
 
 export default TreeView;
-
