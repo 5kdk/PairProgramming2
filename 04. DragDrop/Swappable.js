@@ -3,18 +3,14 @@ const languages = ['JavaScript', 'Java', 'Python', 'CSS', 'PHP', 'Ruby', 'C++', 
 
 // do something!
 const Swappable = $container => {
-  let state = {
-    current: [...languages],
-  };
-
-  let dragIdx = 0;
-  let dropIdx = 0;
+  let $dragStart = null;
+  let $dragEnd = null;
 
   // prettier-ignore
-  const render = () => {
+  const render = _languages => {
     $container.innerHTML = `
     <ul class="draggable-list">
-    ${state.current.map((language, idx) => `
+    ${_languages.map((language, idx) => `
       <li class="${language === languages[idx] ? 'right' : 'wrong'}">
         <div class="seq">${idx + 1}</div>
         <div class="draggable" draggable="true">
@@ -25,36 +21,36 @@ const Swappable = $container => {
     </ul>`;
   };
 
-  const setState = newState => {
-    state = { ...state, ...newState };
-    render();
-  };
-
   const initShuffle = () => {
-    let randomNum = Math.floor(Math.random() * state.current.length);
+    const _languages = [...languages];
+    let randomNum = Math.floor(Math.random() * _languages.length);
     let randomized = [];
 
-    while (state.current.length) {
-      randomized = [...randomized, state.current.splice(randomNum, 1)[0]];
+    while (_languages.length) {
+      randomized = [...randomized, _languages.splice(randomNum, 1)[0]];
       randomNum += 1;
-      if (randomNum >= state.current.length) randomNum = 0;
+      if (randomNum >= _languages.length) randomNum = 0;
     }
 
-    setState({ current: randomized });
+    render(randomized);
   };
 
-  const swapRank = () => {
-    const swapped = [...state.current];
-    swapped[dragIdx] = state.current[dropIdx];
-    swapped[dropIdx] = state.current[dragIdx];
+  const swapRank = ($dragStart, $dragEnd) => {
+    const temp = $dragStart.innerHTML;
+    $dragStart.innerHTML = $dragEnd.innerHTML;
+    $dragEnd.innerHTML = temp;
 
-    setState({ current: swapped });
+    const dragStartIdx = $dragStart.closest('li').firstElementChild.textContent - 1;
+    const dragEndIdx = $dragEnd.closest('li').firstElementChild.textContent - 1;
+
+    $dragStart.closest('li').className = $dragStart.textContent === languages[dragStartIdx] ? 'right' : 'wrong';
+    $dragEnd.closest('li').className = $dragEnd.textContent === languages[dragEndIdx] ? 'right' : 'wrong';
   };
 
   window.addEventListener('DOMContentLoaded', initShuffle);
 
   $container.addEventListener('dragstart', e => {
-    if (e.target.closest('li')) dragIdx = state.current.indexOf(e.target.firstElementChild.textContent);
+    if (e.target.closest('li')) $dragStart = e.target.firstElementChild;
   });
 
   $container.addEventListener('dragover', e => {
@@ -74,12 +70,12 @@ const Swappable = $container => {
   });
 
   $container.addEventListener('drop', e => {
-    if (e.target.matches('.draggable')) return;
+    if (!e.target.matches('.draggable')) return;
 
     e.target.closest('li').classList.remove('over');
-    dropIdx = state.current.indexOf(e.target.firstElementChild.textContent);
+    $dragEnd = e.target.firstElementChild;
 
-    swapRank();
+    swapRank($dragStart, $dragEnd);
   });
 };
 
