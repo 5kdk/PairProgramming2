@@ -10,7 +10,7 @@ class TreeView {
       if (!e.target.closest('a')) return;
 
       const { name, eventType } = e.target.closest('a').dataset;
-      const customEvent = new CustomEvent(eventType, { detail: { name, eventType } });
+      const customEvent = new CustomEvent(eventType, { detail: { name } });
 
       $container.dispatchEvent(customEvent);
     });
