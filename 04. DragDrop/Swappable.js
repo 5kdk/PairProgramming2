@@ -3,8 +3,8 @@ const languages = ['JavaScript', 'Java', 'Python', 'CSS', 'PHP', 'Ruby', 'C++', 
 
 // do something!
 const Swappable = $container => {
-  let $dragStart = null;
-  let $dragEnd = null;
+  let $startEl = null;
+  let $endEl = null;
 
   // prettier-ignore
   const render = _languages => {
@@ -35,22 +35,23 @@ const Swappable = $container => {
     render(randomized);
   };
 
-  const swapRank = ($dragStart, $dragEnd) => {
-    const temp = $dragStart.innerHTML;
-    $dragStart.innerHTML = $dragEnd.innerHTML;
-    $dragEnd.innerHTML = temp;
+  const swapRank = ($startEl, $endEl) => {
+    const temp = $startEl.innerHTML;
 
-    const dragStartIdx = $dragStart.closest('li').firstElementChild.textContent - 1;
-    const dragEndIdx = $dragEnd.closest('li').firstElementChild.textContent - 1;
+    $startEl.innerHTML = $endEl.innerHTML;
+    $endEl.innerHTML = temp;
 
-    $dragStart.closest('li').className = $dragStart.textContent === languages[dragStartIdx] ? 'right' : 'wrong';
-    $dragEnd.closest('li').className = $dragEnd.textContent === languages[dragEndIdx] ? 'right' : 'wrong';
+    const startIdx = $startEl.closest('li').firstElementChild.textContent - 1;
+    const endIdx = $endEl.closest('li').firstElementChild.textContent - 1;
+
+    $startEl.closest('li').className = $startEl.textContent === languages[startIdx] ? 'right' : 'wrong';
+    $endEl.closest('li').className = $endEl.textContent === languages[endIdx] ? 'right' : 'wrong';
   };
 
   window.addEventListener('DOMContentLoaded', initShuffle);
 
   $container.addEventListener('dragstart', e => {
-    if (e.target.closest('li')) $dragStart = e.target.firstElementChild;
+    if (e.target.closest('li')) $startEl = e.target.firstElementChild;
   });
 
   $container.addEventListener('dragover', e => {
@@ -58,24 +59,20 @@ const Swappable = $container => {
   });
 
   $container.addEventListener('dragenter', e => {
-    if (!e.target.matches('.draggable') || !e.target.closest('li')) return;
-
-    e.target.closest('li').classList.toggle('over');
+    if (e.target.closest('li')) e.target.closest('li').classList.toggle('over');
   });
 
   $container.addEventListener('dragleave', e => {
-    if (!e.target.matches('.draggable') || !e.target.closest('li')) return;
-
-    e.target.closest('li').classList.toggle('over');
+    if (e.target.closest('li')) e.target.closest('li').classList.toggle('over');
   });
 
-  $container.addEventListener('drop', e => {
-    if (!e.target.matches('.draggable')) return;
+  $container.addEventListener('drop', ({ target }) => {
+    target.closest('li').classList.remove('over');
 
-    e.target.closest('li').classList.remove('over');
-    $dragEnd = e.target.firstElementChild;
+    if (!target.closest('.draggable')) return;
 
-    swapRank($dragStart, $dragEnd);
+    $endEl = target.matches('.draggable') ? target.firstElementChild : target.parentNode.firstElementChild;
+    swapRank($startEl, $endEl);
   });
 };
 
