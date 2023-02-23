@@ -4,7 +4,6 @@ const addStylesheet = () => {
     .insertAdjacentHTML('beforebegin', `<link href="star-rating/theme.css" rel="stylesheet" />`);
 };
 
-// star rating 컴포넌트
 const StarRating = $container => {
   const { maxRating } = $container.dataset;
 
@@ -14,35 +13,37 @@ const StarRating = $container => {
     </div>`;
 };
 
-// 이벤트 헨들러, 콜백
-const overOutCallback = e => {
+const starHandler = e => {
   if (!e.target.matches('.star-rating-container > i')) return;
 
-  const { children } = e.target.parentNode;
-  const hoverIdx = [...children].indexOf(e.target);
+  const { children: stars } = e.target.parentNode;
+  const eventIdx = [...stars].indexOf(e.target);
 
-  // prettier-ignore
-  if(e.type === 'mouseover') [...children].forEach((star, idx) => { if (idx <= hoverIdx) star.classList.add('hovered') })
-  else [...children].forEach(star => star.classList.remove('hovered'));
+  const handleMouseover = () => {
+    [...stars].forEach((star, idx) => star.classList.toggle('hovered', idx <= eventIdx));
+  };
+
+  const handleMouseout = () => {
+    [...stars].forEach(star => star.classList.remove('hovered'));
+  };
+
+  const handleClick = () => {
+    [...stars].forEach((star, idx) => star.classList.toggle('selected', idx <= eventIdx));
+
+    const rating = eventIdx + 1;
+    const ratingChange = new CustomEvent('rating-change', { detail: rating });
+
+    e.target.parentNode.parentNode.dispatchEvent(ratingChange);
+  };
+
+  if (e.type === 'mouseover') handleMouseover();
+  if (e.type === 'mouseout') handleMouseout();
+  if (e.type === 'click') handleClick();
 };
 
 window.addEventListener('DOMContentLoaded', addStylesheet);
-document.body.addEventListener('mouseover', overOutCallback);
-document.body.addEventListener('mouseout', overOutCallback);
-document.body.addEventListener('click', e => {
-  if (!e.target.matches('.star-rating-container > i')) return;
-
-  const { children } = e.target.parentNode;
-  const clickIdx = [...children].indexOf(e.target);
-
-  [...children].forEach((star, idx) => {
-    star.classList.toggle('selected', idx <= clickIdx);
-  });
-
-  const rating = [...children].filter(star => star.classList.contains('selected')).length;
-  const ratingChangeEvent = new CustomEvent('rating-change', { detail: rating });
-
-  e.target.parentNode.parentNode.dispatchEvent(ratingChangeEvent);
-});
+document.body.addEventListener('mouseover', starHandler);
+document.body.addEventListener('mouseout', starHandler);
+document.body.addEventListener('click', starHandler);
 
 export default StarRating;

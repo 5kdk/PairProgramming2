@@ -10,7 +10,5 @@ $containers.forEach(($container, i) => {
   $container.addEventListener('rating-change', e => {
     const rating = e.detail;
     $currentRatings[i].textContent = rating;
-
-    console.log('커스텀 이벤트');
   });
 });
