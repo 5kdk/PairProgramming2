@@ -1,0 +1,60 @@
+/* .calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+} */
+
+:root {
+  --white: #fff;
+  --gray: #adb1c2;
+  --red: #f1404b;
+  --green: #51c786;
+  --calendar-size: 500;
+}
+
+.hidden {
+  display: none;
+}
+
+.day {
+  color: var(--gray);
+}
+
+.active {
+  color: #000;
+}
+
+.sunday {
+  color: var(--red);
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--green);
+}
+
+.calendar-nav > div {
+  text-align: center;
+  color: var(--white);
+}
+
+button {
+  color: var(--white);
+  border: none;
+  background: transparent;
+}
+
+.calendar-grid {
+  width: 100%;
+  height: calc(100% - var(--calendar-size) / 4);
+  display: grid;
+  text-align: center;
+  place-items: center;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  font-size: calc(var(--calendar-size) * 1 / 28);
+  border-radius: 0 0 calc(var(--calendar-size) * 1 / 40) calc(var(--calendar-size) * 1 / 40);
+  padding: 0 calc(var(--calendar-size) * 1 / 40) calc(var(--calendar-size) * 1 / 40) calc(var(--calendar-size) * 1 / 40);
+}
