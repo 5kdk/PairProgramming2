@@ -1,4 +1,4 @@
-const addStylesheet = () => {
+const starStylesheet = () => {
   document
     .querySelector('script')
     .insertAdjacentHTML('beforebegin', `<link href="star-rating/theme.css" rel="stylesheet" />`);
@@ -16,19 +16,15 @@ const StarRating = $container => {
 const starHandler = e => {
   if (!e.target.matches('.star-rating-container > i')) return;
 
-  const { children: stars } = e.target.parentNode;
-  const eventIdx = [...stars].indexOf(e.target);
+  const $stars = [...e.target.parentNode.children];
+  const eventIdx = [...$stars].indexOf(e.target);
 
-  const handleMouseover = () => {
-    [...stars].forEach((star, idx) => star.classList.toggle('hovered', idx <= eventIdx));
-  };
+  const handleMouseover = () => $stars.forEach((star, idx) => star.classList.toggle('hovered', idx <= eventIdx));
 
-  const handleMouseout = () => {
-    [...stars].forEach(star => star.classList.remove('hovered'));
-  };
+  const handleMouseout = () => $stars.forEach(star => star.classList.remove('hovered'));
 
   const handleClick = () => {
-    [...stars].forEach((star, idx) => star.classList.toggle('selected', idx <= eventIdx));
+    $stars.forEach((star, idx) => star.classList.toggle('selected', idx <= eventIdx));
 
     const rating = eventIdx + 1;
     const ratingChange = new CustomEvent('rating-change', { detail: rating });
@@ -41,9 +37,9 @@ const starHandler = e => {
   if (e.type === 'click') handleClick();
 };
 
-window.addEventListener('DOMContentLoaded', addStylesheet);
-document.body.addEventListener('mouseover', starHandler);
-document.body.addEventListener('mouseout', starHandler);
-document.body.addEventListener('click', starHandler);
+document.addEventListener('DOMContentLoaded', starStylesheet);
+document.addEventListener('mouseover', starHandler);
+document.addEventListener('mouseout', starHandler);
+document.addEventListener('click', starHandler);
 
 export default StarRating;
