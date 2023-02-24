@@ -17,7 +17,7 @@ const starHandler = e => {
   if (!e.target.matches('.star-rating-container > i')) return;
 
   const $stars = [...e.target.parentNode.children];
-  const eventIdx = [...$stars].indexOf(e.target);
+  const eventIdx = $stars.indexOf(e.target);
 
   const handleMouseover = () => $stars.forEach((star, idx) => star.classList.toggle('hovered', idx <= eventIdx));
 
