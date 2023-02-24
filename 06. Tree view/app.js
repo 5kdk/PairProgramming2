@@ -5,42 +5,59 @@ import TreeView from './tree-view/index.js';
  * mock data
  */
 const tree = [
-  { name: 'Home' },
+  { id: 1, name: 'Home' },
   {
+    id: 2,
     name: 'Drinks',
     isOpen: false,
     children: [
       {
+        id: 21,
         name: 'Coffee',
         isOpen: false,
         children: [
           {
+            id: 211,
             name: 'Americano',
             isOpen: false,
-            children: [{ name: 'Red Eye' }, { name: 'Long Black' }, { name: 'French' }],
+            children: [
+              { id: 2111, name: 'Red Eye' },
+              { id: 2112, name: 'Long Black' },
+              { id: 2113, name: 'French' },
+            ],
           },
-          { name: 'Cappuccino' },
-          { name: 'Espresso' },
+          { id: 212, name: 'Cappuccino' },
+          { id: 213, name: 'Espresso' },
         ],
       },
       {
-        name: 'Tea',
+        id: 22,
+        name: 'Tee',
         isOpen: false,
-        children: [{ name: 'Green Tea' }, { name: 'Black Tea' }],
+        children: [
+          { id: 221, name: 'Green Tea' },
+          { id: 222, name: 'Black Tee' },
+        ],
       },
     ],
   },
   {
+    id: 3,
     name: 'Fruit',
     isOpen: false,
     children: [
-      { name: 'Apple' },
+      { id: 31, name: 'Apple' },
       {
+        id: 32,
         name: 'Berry',
         isOpen: false,
-        children: [{ name: 'Strawberry' }, { name: 'Blackberry' }, { name: 'Cranberry' }],
+        children: [
+          { id: 321, name: 'Strawberry' },
+          { id: 322, name: 'Blackberry' },
+          { id: 323, name: 'Cranberry' },
+        ],
       },
-      { name: 'Banana' },
+      { id: 33, name: 'Banana' },
     ],
   },
 ];

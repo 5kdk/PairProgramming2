@@ -9,14 +9,14 @@ class TreeView {
     $container.addEventListener('click', e => {
       if (!e.target.closest('a')) return;
 
-      const { name, eventType } = e.target.closest('a').dataset;
-      const customEvent = new CustomEvent(eventType, { detail: { name } });
+      const { id, eventType } = e.target.closest('a').dataset;
+      const customEvent = new CustomEvent(eventType, { detail: { id } });
 
       $container.dispatchEvent(customEvent);
     });
 
     ['collapse', 'expand'].forEach(eventType =>
-      $container.addEventListener(eventType, e => this.setTree(this.traverseToggle(this.tree, e.detail.name)))
+      $container.addEventListener(eventType, e => this.setTree(this.traverseToggle(this.tree, e.detail.id)))
     );
   }
 
@@ -33,10 +33,10 @@ class TreeView {
   }
 
   // prettier-ignore
-  createDOMString({ name, children, isOpen }) {
+  createDOMString({ id, name, children, isOpen }) {
     return `
       <li class="tree-node">
-        <a href="#" data-name="${name}" data-event-type="${!children ? 'select' : isOpen ? 'collapse' : 'expand'}">
+        <a href="#" data-id="${id}" data-name="${name}" data-event-type="${!children ? 'select' : isOpen ? 'collapse' : 'expand'}">
           <span class="tree-switcher ${!children ? 'noop' : isOpen ? 'expand' : 'collapse'}"></span>
           <span class="tree-content">${name}</span>
         </a>
@@ -54,10 +54,10 @@ class TreeView {
   }
 
   // prettier-ignore
-  traverseToggle(elements, targetName) {
-    return elements.map(({ name, isOpen, children }) => name === targetName
-      ? { name, isOpen: !isOpen, children: children ? this.traverseToggle(children, targetName) : children }
-      : { name, isOpen, children: children ? this.traverseToggle(children, targetName) : children }
+  traverseToggle(elements, targetId) {
+    return elements.map(({ id, name, isOpen, children }) => id === +targetId
+        ? { id, name, isOpen: !isOpen, children: children ? this.traverseToggle(children, targetId) : children }
+        : { id, name, isOpen, children: children ? this.traverseToggle(children, targetId) : children }
     );
   }
 }
