@@ -29,7 +29,7 @@ const starHandler = e => {
     const rating = eventIdx + 1;
     const ratingChange = new CustomEvent('rating-change', { detail: rating });
 
-    e.target.parentNode.parentNode.dispatchEvent(ratingChange);
+    e.target.closest('.star-rating').dispatchEvent(ratingChange);
   };
 
   if (e.type === 'mouseover') handleMouseover();
