@@ -3,7 +3,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 // ---------------------- calendar function --------------------
-const Calendar = $container => {
+const Calendar = ($container, calendarWidth) => {
   let state = {
     year: new Date().getFullYear(),
     month: new Date().getMonth(),
@@ -23,10 +23,10 @@ const Calendar = $container => {
     const prevFirstDate = prevLastDate - prevEmptyCount + 1;
 
     const prevMonth = Array.from({ length: prevEmptyCount }, (_, i) => prevFirstDate + i);
-    const month = Array.from({ length: new Date(state.year, state.month + 1, 0).getDate() }, (_, i) => i + 1);
+    const current = Array.from({ length: new Date(state.year, state.month + 1, 0).getDate() }, (_, i) => i + 1);
     const nextMonth = Array.from({ length: nextEmptyCount }, (_, i) => i + 1);
 
-    return [prevMonth, month, nextMonth];
+    return [prevMonth, current, nextMonth];
   };
 
   const isToday = day => {
@@ -68,7 +68,7 @@ const Calendar = $container => {
   };
 
   const initialize = () => {
-    $container.innerHTML += `<div class="calendar"></div>`;
+    $container.innerHTML += `<div class="calendar" style="--calendar-size: ${calendarWidth}"></div>`;
     renderCalendar();
 
     if (document.head.querySelector('link[href="calendar/theme.css"]')) return;
