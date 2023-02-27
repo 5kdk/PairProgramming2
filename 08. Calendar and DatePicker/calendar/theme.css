@@ -1,0 +1,88 @@
+.calendar {
+  --calendar-grid-item-size: calc((var(--calendar-size) - 10px) / 7);
+  --calendar-font-size: calc(var(--calendar-size) * 0.04);
+
+  width: var(--calendar-size);
+  box-shadow: 1px 1px 20px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 0 10px 10px;
+  font-size: var(--calendar-font-size);
+  background-color: var(--white);
+
+  z-index: 9999;
+}
+
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: -10px;
+  margin-bottom: 0;
+  background-color: var(--green);
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+.calendar-nav > div {
+  text-align: center;
+  color: var(--white);
+}
+
+.calendar-nav > div > .current-month {
+  font-size: 1.4em;
+}
+
+.calendar-nav > button {
+  color: var(--white);
+  border: none;
+  background: transparent;
+}
+
+.calendar-nav > .prev,
+.calendar-nav > .next {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-grid > .day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--calendar-grid-item-size);
+  color: var(--gray);
+}
+
+.calendar-grid > .active {
+  cursor: pointer;
+}
+
+.calendar-grid > .active:hover {
+  background-color: var(--green);
+  border-radius: 50%;
+  color: var(--white);
+}
+
+.calendar-grid > .today {
+  border: 1px solid var(--green);
+  border-radius: 50%;
+}
+
+.calendar-grid > .sunday {
+  color: var(--red);
+}
+
+.calendar-grid > .selected {
+  background-color: var(--green);
+  border-radius: 50%;
+  color: var(--white);
+}
