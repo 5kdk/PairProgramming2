@@ -5,9 +5,12 @@ const DatePicker = $container => {
   `;
 
   $container.addEventListener('click', e => {
-    if (!e.target.matches('.date-picker-input')) return;
+    if (e.target.closest('.calendar')) return;
 
-    $container.querySelector('.calendar').classList.toggle('hidden');
+    const $calendar = $container.querySelector('.calendar');
+
+    if (e.target.matches('.date-picker-input')) $calendar.classList.toggle('hidden');
+    else $calendar.classList.add('hidden');
 
     if (!e.target.value) return;
 
