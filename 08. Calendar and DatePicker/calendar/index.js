@@ -20,10 +20,11 @@ const Calendar = $container => {
     const [prevEmptyCount, nextEmptyCount] = getEmptyCounts();
 
     const prevLastDate = new Date(state.year, state.month, 0).getDate();
+    const prevFirstDate = prevLastDate - prevEmptyCount + 1;
 
-    const prevMonth = new Array(prevEmptyCount).fill(prevLastDate - prevEmptyCount + 1).map((ele, idx) => ele + idx);
-    const month = new Array(new Date(state.year, state.month + 1, 0).getDate()).fill('').map((_, idx) => idx + 1);
-    const nextMonth = new Array(nextEmptyCount).fill('').map((_, idx) => idx + 1);
+    const prevMonth = Array.from({ length: prevEmptyCount }, (_, i) => prevFirstDate + i);
+    const month = Array.from({ length: new Date(state.year, state.month + 1, 0).getDate() }, (_, i) => i + 1);
+    const nextMonth = Array.from({ length: nextEmptyCount }, (_, i) => i + 1);
 
     return [prevMonth, month, nextMonth];
   };
@@ -107,6 +108,7 @@ const Calendar = $container => {
   document.addEventListener('DOMContentLoaded', initialize);
 
   $container.addEventListener('click', handleCalendar);
+
   $container.addEventListener('calendar-hidden', e => {
     setState({
       year: new Date(e.detail.selectedDate).getFullYear(),
