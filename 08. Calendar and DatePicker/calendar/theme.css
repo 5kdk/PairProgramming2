@@ -8,7 +8,6 @@
   padding: 0 10px 10px;
   font-size: var(--calendar-font-size);
   background-color: var(--white);
-
   z-index: 9999;
 }
 
@@ -64,6 +63,7 @@
 
 .calendar-grid > .active {
   cursor: pointer;
+  color: var(--black);
 }
 
 .calendar-grid > .active:hover {
