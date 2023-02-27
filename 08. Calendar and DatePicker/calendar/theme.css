@@ -1,4 +1,5 @@
 .calendar {
+  --calendar-size: 300px;
   --calendar-grid-item-size: calc((var(--calendar-size) - 10px) / 7);
   --calendar-font-size: calc(var(--calendar-size) * 0.04);
 
