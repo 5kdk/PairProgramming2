@@ -69,6 +69,13 @@ const Calendar = $container => {
   const initialize = () => {
     $container.innerHTML += `<div class="calendar"></div>`;
     renderCalendar();
+
+    if (document.head.querySelector('link[href="calendar/theme.css"]')) return;
+
+    const linkStr = '<link rel="stylesheet" href="calendar/theme.css" />';
+    const lastLink = document.querySelector('link:last-of-type');
+
+    lastLink.insertAdjacentHTML('afterend', linkStr);
   };
 
   const handleCalendar = e => {

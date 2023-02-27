@@ -1,8 +1,19 @@
 const DatePicker = $container => {
-  $container.innerHTML = `
-    <h1>Date Picker</h1>
-    <input class="date-picker-input" placeholder="Select a date" readonly>
-  `;
+  const initialize = () => {
+    $container.innerHTML = `
+      <h1>Date Picker</h1>
+      <input class="date-picker-input" placeholder="Select a date" readonly>
+    `;
+
+    if (document.head.querySelector('link[href="date-picker/theme.css"]')) return;
+
+    const linkStr = '<link rel="stylesheet" href="date-picker/theme.css" />';
+    const lastLink = document.querySelector('link:last-of-type');
+
+    lastLink.insertAdjacentHTML('afterend', linkStr);
+  };
+
+  document.addEventListener('DOMContentLoaded', initialize);
 
   $container.addEventListener('click', e => {
     if (e.target.closest('.calendar')) return;
