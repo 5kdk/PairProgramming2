@@ -19,17 +19,24 @@ const Calendar = $container => {
   const getFullCalendar = () => {
     const [prevEmptyCount, nextEmptyCount] = getEmptyCounts();
 
-    const prevLastDay = new Date(state.year, state.month, 0).getDate();
+    const prevLastDate = new Date(state.year, state.month, 0).getDate();
 
-    const prevMonth = new Array(prevEmptyCount).fill(prevLastDay - prevEmptyCount + 1).map((ele, idx) => ele + idx);
+    const prevMonth = new Array(prevEmptyCount).fill(prevLastDate - prevEmptyCount + 1).map((ele, idx) => ele + idx);
     const month = new Array(new Date(state.year, state.month + 1, 0).getDate()).fill('').map((_, idx) => idx + 1);
     const nextMonth = new Array(nextEmptyCount).fill('').map((_, idx) => idx + 1);
 
     return [prevMonth, month, nextMonth];
   };
 
-  const isToday = (year, month, day) =>
-    year === new Date().getFullYear() && month === new Date().getMonth() && day === new Date().getDate();
+  const isToday = day => {
+    const today = new Date();
+    return state.year === today.getFullYear() && state.month === today.getMonth() && day === today.getDate();
+  };
+
+  const isSelected = day => {
+    const selected = new Date($container.children[1].value);
+    return state.year === selected.getFullYear() && state.month === selected.getMonth() && day === selected.getDate();
+  };
 
   // prettier-ignore
   const renderCalendar = () => {
@@ -49,7 +56,7 @@ const Calendar = $container => {
       <section class="calendar-grid">
         ${WEEKDAYS.map(weekday => `<div class="day">${weekday}</div>`).join('')}
         ${$days.map((day, idx) => idx >= prevEmptyCount && idx < prevEmptyCount + current.length
-          ? `<div class="day active ${isToday(state.year, state.month, day) ? 'today': ''} ${idx % 7 === 0 ? 'sunday' : ''}">${day}</div>`
+          ? `<div class="day active ${isToday(day) ? 'today': ''}${idx % 7 === 0 ? 'sunday' : ''}${isSelected(day) ? 'selected' : ''}">${day}</div>`
           : `<div class="day">${day}</div>`).join('')}
       </section>`
     };
@@ -76,15 +83,18 @@ const Calendar = $container => {
     };
 
     // prettier-ignore
-    const handleDayClick = () => {
+    const handleDayClick = e => {
       const clickedDate = `${state.year}-${(state.month + 1 + '').padStart(2, 0)}-${e.target.textContent.padStart(2, 0)}`;
+
+      document.querySelector('.selected')?.classList.remove('selected')
+      e.target.classList.add('selected')
 
       $container.children[1].value = clickedDate;
     };
 
     if (e.target.matches('.prev')) goToPrevMonth();
     if (e.target.matches('.next')) goToNextMonth();
-    if (e.target.matches('.active')) handleDayClick();
+    if (e.target.matches('.active')) handleDayClick(e);
   };
 
   document.addEventListener('DOMContentLoaded', initialize);
