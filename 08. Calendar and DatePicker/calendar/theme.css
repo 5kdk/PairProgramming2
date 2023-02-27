@@ -27,6 +27,7 @@
 .calendar-nav > div {
   text-align: center;
   color: var(--white);
+  margin: calc(var(--calendar-size) * 0.03);
 }
 
 .calendar-nav > div > .current-month {
@@ -45,7 +46,7 @@
   height: 30px;
   text-align: center;
   line-height: 30px;
-  font-size: 1.2em;
+  font-size: 1em;
   cursor: pointer;
 }
 
