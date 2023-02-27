@@ -109,7 +109,7 @@ const Calendar = ($container, calendarWidth) => {
 
   $container.addEventListener('click', handleCalendar);
 
-  $container.addEventListener('calendar-hidden', e => {
+  $container.addEventListener('calendar-open', e => {
     setState({
       year: new Date(e.detail.selectedDate).getFullYear(),
       month: new Date(e.detail.selectedDate).getMonth(),

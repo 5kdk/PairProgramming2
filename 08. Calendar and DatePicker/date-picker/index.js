@@ -25,7 +25,7 @@ const DatePicker = $container => {
 
     if (!e.target.value) return;
 
-    const customEvent = new CustomEvent('calendar-hidden', { detail: { selectedDate: e.target.value } });
+    const customEvent = new CustomEvent('calendar-open', { detail: { selectedDate: e.target.value } });
     $container.dispatchEvent(customEvent);
   });
 };
