@@ -9,12 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
   $root.innerHTML = `
     <nav class="category-list"></nav>
     <div class="news-list-container">
+      <article class="news-list"></article>
       <div class="scroll-observer">
         <img src="img/ball-triangle.svg" alt="Loading..." />
       </div>
     </div>`;
 
   initGlobalState({ category: 'all' });
+
   Nav(document.querySelector('.category-list'));
   subscribe(NewsList.fetchArticles);
+  NewsList.startObserving();
 });

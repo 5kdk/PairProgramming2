@@ -3,16 +3,22 @@
 import { state } from '../state.js';
 
 const Nav = $nav => {
+  const categories = [
+    { id: 'all', title: '전체보기' },
+    { id: 'business', title: '비즈니스' },
+    { id: 'entertainment', title: '엔터테인먼트' },
+    { id: 'health', title: '건강' },
+    { id: 'science', title: '과학' },
+    { id: 'sports', title: '스포츠' },
+    { id: 'technology', title: '기술' },
+  ];
+
+  // prettier-ignore
   $nav.innerHTML = `
       <ul>
-        <li id="all" class="category-item active">전체보기</li>
-        <li id="business" class="category-item">비즈니스</li>
-        <li id="entertainment" class="category-item">엔터테인먼트</li>
-        <li id="health" class="category-item">건강</li>
-        <li id="science" class="category-item">과학</li>
-        <li id="sports" class="category-item">스포츠</li>
-        <li id="technology" class="category-item">기술</li>
-      </ul>`;
+      ${categories.map(({ id, title }) => `
+        <li id="${id}" class="category-item ${id === state.category ? 'active' : ''}">${title}</li>`).join('')}
+      </ul>`
 
   $nav.addEventListener('click', e => {
     if (!e.target.classList.contains('category-item')) return;
