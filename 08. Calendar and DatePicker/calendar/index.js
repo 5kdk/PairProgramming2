@@ -96,7 +96,8 @@ const Calendar = ($container, calendarWidth) => {
 
       document.querySelector('.selected')?.classList.remove('selected')
       e.target.classList.add('selected')
-
+      e.target.closest('.calendar').classList.add('hidden');
+      
       $container.children[1].value = clickedDate;
     };
 
