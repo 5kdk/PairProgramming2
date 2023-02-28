@@ -14,14 +14,14 @@ const NewsList = (() => {
     <section class="news-item">
       <div class="thumbnail">
         <a href="${url}" target="_blank" rel="noopener noreferrer">
-          <img src="${urlToImage}" alt="thumbnail" />
+          <img src="${urlToImage}" onerror="this.onerror=null; this.src='https://via.placeholder.com/160x100';" alt="thumbnail">
         </a>
       </div>
       <div class="contents">
         <h2>
           <a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>
         </h2>
-        <p>${description}</p>
+        <p>${description ?? 'Click to read article.'}</p>
       </div>
     </section>`).join('')}`
 
@@ -52,10 +52,10 @@ const NewsList = (() => {
   const startObserving = () => {
     const observer = new IntersectionObserver(entries => {
       if (entries[0].intersectingRatio === 1 || !entries[0].isIntersecting) return;
-  
+
       page += 1;
       fetchArticles();
-    }, { threshold: 0.7 });
+    }, { threshold: 0.8 });
 
     observer.observe(document.querySelector('.scroll-observer'));
   };
