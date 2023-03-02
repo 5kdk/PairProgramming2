@@ -4,13 +4,13 @@ class TreeView {
     this.$container = $container;
     this.tree = tree;
 
-    window.addEventListener('DOMContentLoaded', () => this.render());
+    document.addEventListener('DOMContentLoaded', () => this.render());
 
     $container.addEventListener('click', e => {
       if (!e.target.closest('a')) return;
 
-      const { id, eventType } = e.target.closest('a').dataset;
-      const customEvent = new CustomEvent(eventType, { detail: { id } });
+      const { id, name, eventType } = e.target.closest('a').dataset;
+      const customEvent = new CustomEvent(eventType, { detail: { id, name } });
 
       $container.dispatchEvent(customEvent);
     });
@@ -53,12 +53,13 @@ class TreeView {
     this.$container.addEventListener(eventType, eventHandler);
   }
 
-  // prettier-ignore
   traverseToggle(elements, targetId) {
-    return elements.map(({ id, name, isOpen, children }) => id === +targetId
-        ? { id, name, isOpen: !isOpen, children: children ? this.traverseToggle(children, targetId) : children }
-        : { id, name, isOpen, children: children ? this.traverseToggle(children, targetId) : children }
-    );
+    return elements.map(({ id, name, isOpen, children }) => ({
+      id,
+      name,
+      isOpen: id === +targetId ? !isOpen : isOpen,
+      children: children ? this.traverseToggle(children, targetId) : children,
+    }));
   }
 }
 

@@ -32,11 +32,11 @@ const tree = [
       },
       {
         id: 22,
-        name: 'Tee',
+        name: 'Tea',
         isOpen: false,
         children: [
           { id: 221, name: 'Green Tea' },
-          { id: 222, name: 'Black Tee' },
+          { id: 222, name: 'Black Tea' },
         ],
       },
     ],
