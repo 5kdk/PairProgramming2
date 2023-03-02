@@ -9,16 +9,16 @@ const Swappable = $container => {
   // prettier-ignore
   const render = _languages => {
     $container.innerHTML = `
-    <ul class="draggable-list">
-    ${_languages.map((language, idx) => `
-      <li class="${language === languages[idx] ? 'right' : 'wrong'}">
-        <div class="seq">${idx + 1}</div>
-        <div class="draggable" draggable="true">
-          <p class="language-name">${language}</p>
-          <i class="bx bx-menu"></i>
-        </div>
-      </li>`).join('')}
-    </ul>`;
+      <ul class="draggable-list">
+      ${_languages.map((language, idx) => `
+        <li class="${language === languages[idx] ? 'right' : 'wrong'}">
+          <div class="seq">${idx + 1}</div>
+          <div class="draggable" draggable="true">
+            <p class="language-name">${language}</p>
+            <i class="bx bx-menu"></i>
+          </div>
+        </li>`).join('')}
+      </ul>`;
   };
 
   const initShuffle = () => {
@@ -36,19 +36,19 @@ const Swappable = $container => {
   };
 
   const swapRank = ($startEl, $endEl) => {
-    const temp = $startEl.innerHTML;
+    const copiedStartEl = $startEl.innerHTML;
 
     $startEl.innerHTML = $endEl.innerHTML;
-    $endEl.innerHTML = temp;
+    $endEl.innerHTML = copiedStartEl;
 
-    const startIdx = $startEl.closest('li').firstElementChild.textContent - 1;
+    const startIdx = $startEl.closest('li').firstElementChild.textCotent - 1;
     const endIdx = $endEl.closest('li').firstElementChild.textContent - 1;
 
     $startEl.closest('li').className = $startEl.textContent === languages[startIdx] ? 'right' : 'wrong';
     $endEl.closest('li').className = $endEl.textContent === languages[endIdx] ? 'right' : 'wrong';
   };
 
-  window.addEventListener('DOMContentLoaded', initShuffle);
+  document.addEventListener('DOMContentLoaded', initShuffle);
 
   $container.addEventListener('dragstart', e => {
     if (e.target.closest('li')) $startEl = e.target.firstElementChild;
