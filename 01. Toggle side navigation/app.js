@@ -3,8 +3,8 @@ const controlView = (() => {
 
   const $nav = document.querySelector('nav');
 
+  // prettier-ignore
   const initRender = () => {
-    // prettier-ignore
     isOpened = JSON.parse(localStorage.getItem('open-status')) ?? isOpened;
 
     $nav.classList.toggle('active', isOpened);
@@ -15,17 +15,22 @@ const controlView = (() => {
     });
   };
 
-  const toggleNavBar = () => {
+  const toggleNav = () => {
     $nav.classList.toggle('active');
     isOpened = !isOpened;
-    localStorage.setItem('open-status', isOpened);
   };
+
+  const setNavOpenStatus = () => localStorage.setItem('open-status', isOpened);
 
   return e => {
     if (e.type === 'DOMContentLoaded') initRender();
-    else toggleNavBar();
+
+    if (e.type === 'click') toggleNav();
+
+    if (e.type === 'beforeunload') setNavOpenStatus();
   };
 })();
 
-window.addEventListener('DOMContentLoaded', controlView);
+document.addEventListener('DOMContentLoaded', controlView);
 document.querySelector('.toggle').addEventListener('click', controlView);
+window.addEventListener('beforeunload', controlView);
