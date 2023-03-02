@@ -57,7 +57,7 @@ const Calendar = ($container, calendarWidth) => {
       <section class="calendar-grid">
         ${WEEKDAYS.map(weekday => `<div class="day">${weekday}</div>`).join('')}
         ${$days.map((day, idx) => idx >= prevEmptyCount && idx < prevEmptyCount + current.length
-          ? `<div class="day active ${isToday(day) ? 'today': ''}${idx % 7 === 0 ? 'sunday' : ''}${isSelected(day) ? 'selected' : ''}">${day}</div>`
+          ? `<div class="day active ${isToday(day) ? 'today ': ''}${idx % 7 === 0 ? 'sunday ' : ''}${isSelected(day) ? 'selected' : ''}">${day}</div>`
           : `<div class="day">${day}</div>`).join('')}
       </section>`
     };
