@@ -1,3 +1,5 @@
+// import { TodoFilter, TodoInput, TodoList } from './components/App.js';
+
 let state = {
   todos: [],
   todoFilter: [],
@@ -16,12 +18,12 @@ const getInitState = () => ({
   currentTodoFilterId: 0,
 });
 
+// prettier-ignore
 const createDOM = state => {
   const { todos, todoFilter, currentTodoFilterId: filterId } = state;
   const filtered = todos.filter(todo => (filterId === 2 ? !todo.completed : filterId === 1 ? todo.completed : todo));
   const $fragment = document.createElement('div');
 
-  // prettier-ignore
   $fragment.innerHTML = `
     <input type="text" class="add" placeholder="Enter a task!"></input>
     <ul class="todo-list">
@@ -92,29 +94,23 @@ const setState = newState => {
   }
 };
 
-// generate id
-// prettier-ignore
 const generateId = () => Math.max(...state.todos.map(todo => todo.id), 0) + 1;
 
-// add todo
 const addTodo = content => {
   const newTodo = { id: generateId(), content, completed: false };
   setState({ todos: [newTodo, ...state.todos] });
 };
 
-// toggle todo
 const toggleTodo = id => {
   const todos = state.todos.map(todo => (todo.id === +id ? { ...todo, completed: !todo.completed } : todo));
   setState({ todos });
 };
 
-// remove todo
 const removeTodo = id => {
   const todos = state.todos.filter(todo => todo.id !== +id);
   setState({ todos });
 };
 
-// filter todos
 const filterTodos = id => {
   setState({ currentTodoFilterId: +id });
 };
@@ -123,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setState(getInitState());
 });
 
-// add todo
 $root.addEventListener('keydown', e => {
   if (e.isComposing || e.keyCode === 229) return;
   if (e.key !== 'Enter' || !e.target.matches('.add')) return;
@@ -131,28 +126,17 @@ $root.addEventListener('keydown', e => {
   const content = e.target.value.trim();
   e.target.value = '';
 
-  if (content) {
-    addTodo(content);
-  }
+  if (content) addTodo(content);
 });
 
-// toggle todo
 $root.addEventListener('change', e => {
-  if (!e.target.classList.contains('toggle')) return;
-
-  toggleTodo(e.target.closest('li').id);
+  if (e.target.classList.contains('toggle')) toggleTodo(e.target.closest('li').id);
 });
 
-// remove todo
 $root.addEventListener('click', e => {
-  if (!e.target.classList.contains('remove')) return;
-
-  removeTodo(e.target.closest('li').id);
+  if (e.target.classList.contains('remove')) removeTodo(e.target.closest('li').id);
 });
 
-// filter todos
 $root.addEventListener('click', e => {
-  if (!e.target.matches('.todo-filter > li')) return;
-
-  filterTodos(e.target.dataset.filterId);
+  if (e.target.matches('.todo-filter > li')) filterTodos(e.target.dataset.filterId);
 });
