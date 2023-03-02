@@ -6,6 +6,7 @@
     - [3-1-2. 발견💡](#3-1-2-발견)
     - [3-1-3. 배운점📝](#3-1-3-배운점)
   - [3-2. 선언🧎🏻](#3-2-선언)
+  - [3-3. 최종 리팩토링](#3-3-최종-리팩토링)
 
 <br>
 
@@ -56,3 +57,38 @@
 ## 3-2. 선언🧎🏻
 
 - 함수형 컴포넌트와 클래스 컴포넌트의 가장 큰 차이점 중 하나는 `this`의 사용여부다. `this` 사용이 필요 없었던 함수형 컴포넌트와 달리 클래스 컴포넌트에서는 내부 메서드 등의 참조를 해야하므로 `this` 사용이 불가피하다. 이로 인해 잘못된 `this` 바인딩이 생겨 코드에 오류가 발생할 수 있다. 앞으로 `this`에 대한 추가 고민을 하게 만드는 클래스 컴포넌트보다는 함수형 컴포넌트의 사용을 지향할 것이다.
+
+## 3-3. 최종 리팩토링
+
+- 가독성을 위해 아래와 같이 변경
+
+```javascript
+// 변경 전
+const newMenuList = this.state.menuList.map(menu =>
+  menu.id === +id ? { ...menu, isOpen: !menu.isOpen } : this.props.showMultiple ? menu : { ...menu, isOpen: false }
+);
+```
+
+```javascript
+// 변경 후
+const newMenuList = this.props.showMultiple
+  ? menuList.map(menu => (menu.id === +id ? { ...menu, isOpen: !menu.isOpen } : menu))
+  : menuList.map(menu => (menu.id === +id ? { ...menu, isOpen: !menu.isOpen } : { ...menu, isOpen: false }));
+```
+
+- 필요 없는 early return문 제거
+
+```javascript
+// 변경 전
+$container.addEventListener('click', e => {
+  if (!e.target.closest('h1')) return;
+  this.toggleMenu(e);
+});
+```
+
+```javascript
+// 변경 후
+$container.addEventListener('click', e => {
+  if (e.target.closest('h1')) this.toggleMenu(e);
+});
+```
