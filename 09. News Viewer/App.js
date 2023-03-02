@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 // do something!
 import { Nav, NewsList } from './components/index.js';
-import { initGlobalState, subscribe } from './state.js';
+import { initGlobalState } from './state.js';
 
 const $root = document.getElementById('root');
 
@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
 
   initGlobalState({ category: 'all' });
-
-  Nav(document.querySelector('.category-list'));
-  subscribe(NewsList.fetchArticles);
-  NewsList.startObserving();
+  Nav();
+  NewsList();
 });

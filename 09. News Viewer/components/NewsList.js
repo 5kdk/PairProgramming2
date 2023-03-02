@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 // eslint-disable-next-line import/extensions
-import { state } from '../state.js';
+import { state, subscribe } from '../state.js';
 
-const NewsList = (() => {
+const NewsList = () => {
   let localCategory = '';
   let page = 1;
 
@@ -60,10 +60,8 @@ const NewsList = (() => {
     observer.observe(document.querySelector('.scroll-observer'));
   };
 
-  return {
-    fetchArticles,
-    startObserving,
-  };
-})();
+  startObserving();
+  subscribe(fetchArticles);
+};
 
 export default NewsList;
