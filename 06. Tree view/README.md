@@ -14,6 +14,7 @@
     - [6-3-2. 발견💡](#6-3-2-발견)
     - [6-3-3. 배운점📝](#6-3-3-배운점)
   - [6-4. 선언🧎🏻](#6-4-선언)
+  - [6-5 최종 리팩토링](#6-5-최종-리팩토링)
 
 ---
 
@@ -199,3 +200,29 @@ on(eventType, eventHandler) {
 ## 6-4. 선언🧎🏻
 
 - 재귀함수, 커스텀 이벤트 모두 사용 빈도가 높지 않아 구현에 어려움을 겪었다. 침착하게 접근해보니 사실 어렵지 않았다. 너무 겁먹을 필요 없다.
+
+## 6-5 최종 리팩토링
+
+- 같은 패턴이 있는 코드의 중복을 지양하여 코드의 가독성이 좋아지도록 수시로 정리하자
+
+```javascript
+// 변경 전
+traverseToggle(elements, targetId) {
+  return elements.map(({ id, name, isOpen, children }) => id === +targetId
+      ? { id, name, isOpen: !isOpen, children: children ? this.traverseToggle(children, targetId) : children }
+      : { id, name, isOpen, children: children ? this.traverseToggle(children, targetId) : children }
+  );
+}
+```
+
+```javascript
+// 변경 후
+traverseToggle(elements, targetId) {
+  return elements.map(({ id, name, isOpen, children }) => ({
+    id,
+    name,
+    isOpen: id === +targetId ? !isOpen : isOpen,
+    children: children ? this.traverseToggle(children, targetId) : children,
+  }));
+}
+```
