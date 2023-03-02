@@ -40,7 +40,7 @@ const NewsList = (() => {
       handleCategoryChange();
       const url = `https://newsapi.org/v2/top-headlines?country=kr&category=${localCategory === 'all' ? '' : localCategory}&page=${page}&pageSize=${MAX_PAGE}&apiKey=${API_KEY}`;
       const response = await axios.get(url);
-      document.querySelector('.news-list').innerHTML += createDOMStr(response.data.articles);
+      document.querySelector('.news-list').insertAdjacentHTML('beforeend', createDOMStr(response.data.articles));
     } catch (error) {
       throw new Error(error);
     } finally {
