@@ -1,5 +1,4 @@
 class TreeView {
-  /* do something! */
   constructor($container, tree) {
     this.$container = $container;
     this.tree = tree;

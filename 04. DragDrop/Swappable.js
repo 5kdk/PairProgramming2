@@ -1,7 +1,6 @@
 // https://githut.info
 const languages = ['JavaScript', 'Java', 'Python', 'CSS', 'PHP', 'Ruby', 'C++', 'C', 'Shell', 'C#'];
 
-// do something!
 const Swappable = $container => {
   let $startEl = null;
   let $endEl = null;
@@ -36,10 +35,7 @@ const Swappable = $container => {
   };
 
   const swapRank = ($startEl, $endEl) => {
-    const copiedStartEl = $startEl.innerHTML;
-
-    $startEl.innerHTML = $endEl.innerHTML;
-    $endEl.innerHTML = copiedStartEl;
+    [$endEl.innerHTML, $startEl.innerHTML] = [$startEl.innerHTML, $endEl.innerHTML];
 
     [$startEl, $endEl].forEach($el => {
       const _idx = $el.closest('li').firstElementChild.textContent - 1;
@@ -58,13 +54,11 @@ const Swappable = $container => {
   });
 
   $container.addEventListener('dragenter', e => {
-    e.preventDefault();
-    if (e.target.closest('li')) e.target.closest('li').classList.toggle('over');
+    e.target.closest('li')?.classList.toggle('over');
   });
 
   $container.addEventListener('dragleave', e => {
-    e.preventDefault();
-    if (e.target.closest('li')) e.target.closest('li').classList.toggle('over');
+    e.target.closest('li')?.classList.toggle('over');
   });
 
   $container.addEventListener('drop', ({ target }) => {

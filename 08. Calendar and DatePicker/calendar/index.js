@@ -2,7 +2,6 @@
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',];
 const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-// ---------------------- calendar function --------------------
 const Calendar = ($container, calendarWidth) => {
   let state = {
     year: null,

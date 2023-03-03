@@ -3,11 +3,14 @@
 import { state, subscribe } from '../state.js';
 
 const NewsList = () => {
-  let localCategory = '';
-  let page = 1;
+  const $newsList = document.querySelector('.news-list');
+  const $observer = document.querySelector('.scroll-observer');
 
   const API_KEY = '5d62f4885aa74eb2a6674c56d41200d2';
   const MAX_PAGE = 5;
+
+  let localCategory = '';
+  let page = 1;
 
   // prettier-ignore
   const createDOMStr = posts => `${posts.map(({ url, urlToImage, title, description }) => `
@@ -28,10 +31,10 @@ const NewsList = () => {
   const handleCategoryChange = () => {
     if (localCategory === state.category) return;
 
-    document.querySelector('.scroll-observer').style.display = 'none';
+    $observer.style.display = 'none';
     page = 1;
     localCategory = state.category;
-    document.querySelector('.news-list').innerHTML = '';
+    $newsList.innerHTML = '';
   };
 
   // prettier-ignore
@@ -40,11 +43,11 @@ const NewsList = () => {
       handleCategoryChange();
       const url = `https://newsapi.org/v2/top-headlines?country=kr&category=${localCategory === 'all' ? '' : localCategory}&page=${page}&pageSize=${MAX_PAGE}&apiKey=${API_KEY}`;
       const response = await axios.get(url);
-      document.querySelector('.news-list').insertAdjacentHTML('beforeend', createDOMStr(response.data.articles));
+      $newsList.insertAdjacentHTML('beforeend', createDOMStr(response.data.articles));
     } catch (error) {
       throw new Error(error);
     } finally {
-      document.querySelector('.scroll-observer').style.display = 'block';
+      $observer.style.display = 'block';
     }
   };
 
@@ -57,7 +60,7 @@ const NewsList = () => {
       fetchArticles();
     }, { threshold: 0.8 });
 
-    observer.observe(document.querySelector('.scroll-observer'));
+    observer.observe($observer);
   };
 
   startObserving();
@@ -65,3 +68,6 @@ const NewsList = () => {
 };
 
 export default NewsList;
+
+// 퍼포먼스에 많은 영향을 미치는 이미지들이 많을때 이를 관리하려면?
+// lazy loading 솔루션 (ex: 100px to 2560px)

@@ -3,19 +3,15 @@ const controlView = (() => {
 
   const $nav = document.querySelector('nav');
 
-  // prettier-ignore
   const initRender = () => {
     isOpened = JSON.parse(localStorage.getItem('open-status')) ?? isOpened;
 
     $nav.classList.toggle('active', isOpened);
     document.body.style.visibility = 'visible';
-
-    setTimeout(() => {
-      document.body.classList.remove('preload');
-    });
   };
 
   const toggleNav = () => {
+    document.body.classList.remove('preload');
     $nav.classList.toggle('active');
     isOpened = !isOpened;
   };

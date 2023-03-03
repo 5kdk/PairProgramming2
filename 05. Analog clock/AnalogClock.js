@@ -1,5 +1,4 @@
 // do something!
-
 const AnalogClock = $container => {
   $container.innerHTML = `
     <div class="hand hour"></div>
