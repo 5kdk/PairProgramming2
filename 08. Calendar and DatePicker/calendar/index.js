@@ -5,8 +5,8 @@ const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 // ---------------------- calendar function --------------------
 const Calendar = ($container, calendarWidth) => {
   let state = {
-    year: new Date().getFullYear(),
-    month: new Date().getMonth(),
+    year: null,
+    month: null,
   };
 
   const getEmptyCounts = () => {
@@ -68,8 +68,12 @@ const Calendar = ($container, calendarWidth) => {
   };
 
   const initialize = () => {
-    $container.innerHTML += `<div class="calendar" style="--calendar-size: ${calendarWidth}"></div>`;
-    renderCalendar();
+    $container.innerHTML += `<div class="calendar hidden" style="--calendar-size: ${calendarWidth}"></div>`;
+
+    setState({
+      year: new Date().getFullYear(),
+      month: new Date().getMonth(),
+    });
 
     if (document.head.querySelector('link[href="calendar/theme.css"]')) return;
 
