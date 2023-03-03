@@ -41,11 +41,10 @@ const Swappable = $container => {
     $startEl.innerHTML = $endEl.innerHTML;
     $endEl.innerHTML = copiedStartEl;
 
-    const startIdx = $startEl.closest('li').firstElementChild.textCotent - 1;
-    const endIdx = $endEl.closest('li').firstElementChild.textContent - 1;
-
-    $startEl.closest('li').className = $startEl.textContent === languages[startIdx] ? 'right' : 'wrong';
-    $endEl.closest('li').className = $endEl.textContent === languages[endIdx] ? 'right' : 'wrong';
+    [$startEl, $endEl].forEach($el => {
+      const _idx = $el.closest('li').firstElementChild.textContent - 1;
+      $el.closest('li').className = $el.textContent === languages[_idx] ? 'right' : 'wrong';
+    });
   };
 
   document.addEventListener('DOMContentLoaded', initShuffle);
