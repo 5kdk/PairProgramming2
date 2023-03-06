@@ -1,23 +1,29 @@
-// eslint-disable-next-line import/no-cycle, import/extensions
-import { state, setState } from '../state/state.js';
+// eslint-disable-next-line import/extensions
+import Todos from './App.js';
 
-const toggleTodo = id => {
-  const todos = state.todos.map(todo => (todo.id === +id ? { ...todo, completed: !todo.completed } : todo));
-  setState({ todos });
-};
+class TodoList extends Todos {
+  constructor() {
+    super();
+    this.createEle();
+  }
 
-const removeTodo = id => {
-  const todos = state.todos.filter(todo => todo.id !== +id);
-  setState({ todos });
-};
+  toggleTodo(id) {
+    const todos = this.state.todos.map(todo => (todo.id === +id ? { ...todo, completed: !todo.completed } : todo));
+    this.setState({ todos });
+  }
 
-const TodoList = () => {
-  const { todos, currentTodoFilterId: filterId } = state;
-  const filtered = todos.filter(todo => (filterId === 2 ? !todo.completed : filterId === 1 ? todo.completed : todo));
+  removeTodo(id) {
+    const todos = this.state.todos.filter(todo => todo.id !== +id);
+    this.setState({ todos });
+  }
 
-  const $fragment = document.createElement('div');
+  todoListEle = () => {
+    const { todos, currentTodoFilterId: filterId } = this.state;
+    const filtered = todos.filter(todo => (filterId === 2 ? !todo.completed : filterId === 1 ? todo.completed : todo));
 
-  $fragment.innerHTML = `
+    const $fragment = document.createElement('div');
+
+    $fragment.innerHTML = `
     <ul class="todo-list">
       ${filtered
         .map(
@@ -32,15 +38,16 @@ const TodoList = () => {
     </ul>
   `;
 
-  $fragment.firstElementChild.onchange = e => {
-    if (e.target.classList.contains('toggle')) toggleTodo(e.target.closest('li').id);
-  };
+    $fragment.firstElementChild.onchange = e => {
+      if (e.target.classList.contains('toggle')) this.toggleTodo(e.target.closest('li').id);
+    };
 
-  $fragment.firstElementChild.onclick = e => {
-    if (e.target.classList.contains('remove')) removeTodo(e.target.closest('li').id);
-  };
+    $fragment.firstElementChild.onclick = e => {
+      if (e.target.classList.contains('remove')) this.removeTodo(e.target.closest('li').id);
+    };
 
-  return $fragment.firstElementChild;
-};
+    return $fragment.firstElementChild;
+  };
+}
 
 export default TodoList;

@@ -1,26 +1,33 @@
-// eslint-disable-next-line import/no-cycle, import/extensions
-import { state, setState } from '../state/state.js';
+// eslint-disable-next-line import/extensions
+import Todos from './App.js';
 
-const filterTodos = id => {
-  setState({ currentTodoFilterId: +id });
-};
+class TodoFilter extends Todos {
+  constructor() {
+    super();
+    this.createEle();
+  }
 
-const TodoFilter = () => {
-  const { todoFilter, currentTodoFilterId: filterId } = state;
-  const $fragment = document.createElement('div');
+  filter(id) {
+    this.setState({ currentTodoFilterId: +id });
+  }
 
-  // prettier-ignore
-  $fragment.innerHTML = `
+  TodoFilterEle() {
+    const { todoFilter, currentTodoFilterId: filterId } = this.state;
+    const $fragment = document.createElement('div');
+
+    // prettier-ignore
+    $fragment.innerHTML = `
     <ul class="todo-filter">
       ${todoFilter.map((filter, idx) => `
         <li data-filter-id="${idx}" class="${filterId === idx ? 'selected' : ''}">${filter}</li>`).join('')}
     </ul>`.trim();
 
-  $fragment.firstElementChild.onclick = e => {
-    if (e.target.matches('.todo-filter > li')) filterTodos(e.target.dataset.filterId);
-  };
+    $fragment.firstElementChild.onclick = e => {
+      if (e.target.matches('.todo-filter > li')) this.filterTodos(e.target.dataset.filterId);
+    };
 
-  return $fragment.firstElementChild;
-};
+    return $fragment.firstElementChild;
+  }
+}
 
 export default TodoFilter;

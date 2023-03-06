@@ -1,6 +1,5 @@
 const updateAttributes = (oldNode, newNode) => {
   if (newNode.checked !== oldNode.checked) oldNode.checked = newNode.checked;
-  // checked, value, selected 이지만 여기선 checked만 확인해도된다~
 
   for (const { name, value } of [...newNode.attributes]) {
     if (value !== oldNode.getAttribute(name)) oldNode.setAttribute(name, value);
