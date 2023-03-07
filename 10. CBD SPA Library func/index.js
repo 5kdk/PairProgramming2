@@ -1,10 +1,29 @@
 /* eslint-disable import/extensions */
-// eslint-disable-next-line import/no-cycle
-import { state, setState } from './state/state.js';
 import { TodoInput, TodoList, TodoFilter } from './components/App.js';
-import updateDOM from './library/diff.js';
+import diff from './library/diff.js';
 
 const $root = document.getElementById('root');
+
+let state = {
+  todos: [
+    { id: 3, content: 'Javascript', completed: false },
+    { id: 2, content: 'CSS', completed: true },
+    { id: 1, content: 'HTML', completed: false },
+  ],
+  todoFilter: ['All', 'Completed', 'Active'],
+  currentTodoFilterId: 0,
+};
+
+const render = () => {
+  const newNodes = [TodoInput(), TodoList(state), TodoFilter(state)];
+
+  diff($root, newNodes, $root.childNodes);
+};
+
+const setState = newState => {
+  state = { ...state, ...newState };
+  render();
+};
 
 const generateId = () => Math.max(...state.todos.map(todo => todo.id), 0) + 1;
 
@@ -29,24 +48,23 @@ const callBackHandler = {
   },
 };
 
-// prettier-ignore
-const createNewDOM = () => {
-  const $fragment = document.createElement('div');
+$root.onkeydown = e => {
+  if (e.isComposing || e.keyCode === 229) return;
+  if (e.key !== 'Enter' || !e.target.matches('.add')) return;
 
-  [TodoInput(callBackHandler), TodoList(state, callBackHandler), TodoFilter(state, callBackHandler)].forEach(dom =>
-    $fragment.appendChild(dom)
-  );
+  const content = e.target.value.trim();
+  e.target.value = '';
 
-  return [...$fragment.childNodes];
+  if (content) callBackHandler.addTodo(content);
 };
 
-const render = () => {
-  const newNodes = createNewDOM();
-  const maxLength = Math.max(newNodes.length, $root.childNodes.length);
+$root.onclick = e => {
+  if (e.target.classList.contains('remove')) callBackHandler.removeTodo(e.target.closest('li').id);
+  if (e.target.matches('.todo-filter > li')) callBackHandler.filterTodos(e.target.dataset.filterId);
+};
 
-  for (let i = 0; i < maxLength; i++) {
-    updateDOM($root, newNodes[i], $root.childNodes[i]);
-  }
+$root.onchange = e => {
+  if (e.target.classList.contains('toggle')) callBackHandler.toggleTodo(e.target.closest('li').id);
 };
 
 render();

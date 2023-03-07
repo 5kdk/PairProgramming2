@@ -1,8 +1,8 @@
-const TodoList = (state, callBackHandler) => {
+const TodoList = state => {
   const { todos, currentTodoFilterId: filterId } = state;
   const filtered = todos.filter(todo => (filterId === 2 ? !todo.completed : filterId === 1 ? todo.completed : todo));
 
-  const $fragment = document.createElement('div');
+  const $fragment = document.createElement('template');
 
   // prettier-ignore
   $fragment.innerHTML = `
@@ -15,15 +15,7 @@ const TodoList = (state, callBackHandler) => {
       </li>`).join('')}
     </ul>`;
 
-  $fragment.firstElementChild.onchange = e => {
-    if (e.target.classList.contains('toggle')) callBackHandler.toggleTodo(e.target.closest('li').id);
-  };
-
-  $fragment.firstElementChild.onclick = e => {
-    if (e.target.classList.contains('remove')) callBackHandler.removeTodo(e.target.closest('li').id);
-  };
-
-  return $fragment.firstElementChild;
+  return $fragment.content.firstElementChild;
 };
 
 export default TodoList;
