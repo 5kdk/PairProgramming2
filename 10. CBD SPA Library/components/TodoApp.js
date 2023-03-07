@@ -8,7 +8,7 @@ class TodoApp {
   constructor($root) {
     this.$root = $root;
     this.state = {};
-    
+
     this.todoInput = new TodoInput(this);
     this.todoList = new TodoList(this);
     this.todoFilter = new TodoFilter(this);
