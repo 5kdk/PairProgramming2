@@ -12,7 +12,7 @@ class TodoInput {
     this.props.setState({ todos: [newTodo, ...this.props.state.todos] });
   }
 
-  getDomEle() {
+  getElements() {
     const $fragment = document.createElement('template');
 
     $fragment.innerHTML = '<input type="text" class="add" placeholder="Enter a task!"></input>';

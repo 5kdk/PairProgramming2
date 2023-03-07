@@ -1,4 +1,4 @@
-const diffAlgo = (parent, newNode, oldNode) => {
+const diff = (parent, newNode, oldNode) => {
   const updateAttributes = (oldNode, newNode) => {
     if (newNode.checked !== oldNode.checked) oldNode.checked = newNode.checked;
 
@@ -7,6 +7,7 @@ const diffAlgo = (parent, newNode, oldNode) => {
     for (const { name, value } of [...newNode.attributes]) {
       if (value !== oldNode.getAttribute(name)) oldNode.setAttribute(name, value);
     }
+
     for (const { name } of [...oldNode.attributes]) {
       if (newNode.getAttribute(name) === undefined) oldNode.removeAttribute(name);
     }
@@ -19,14 +20,17 @@ const diffAlgo = (parent, newNode, oldNode) => {
 
     if (newNode instanceof Text && oldNode instanceof Text) {
       if (oldNode.nodeValue === newNode.nodeValue) return;
+
       oldNode.nodeValue = newNode.nodeValue;
       return;
     }
 
     if (newNode.nodeName !== oldNode.nodeName) {
       const index = [...parent.childNodes].indexOf(oldNode);
+
       oldNode.remove();
       parent.appendChild(newNode, index);
+
       return;
     }
 
@@ -36,12 +40,21 @@ const diffAlgo = (parent, newNode, oldNode) => {
     const oldChildNodes = [...oldNode.childNodes];
 
     const maxLength = Math.max(newChildNodes.length, oldChildNodes.length);
+
     for (let i = 0; i < maxLength; i++) {
       updateDOM(oldNode, newChildNodes[i], oldChildNodes[i]);
     }
   };
 
-  updateDOM(parent, newNode, oldNode);
+  const render = () => {
+    const maxLength = Math.max(newNode.length, oldNode.length);
+
+    for (let i = 0; i < maxLength; i++) {
+      updateDOM(parent, newNode[i], oldNode[i]);
+    }
+  };
+
+  render();
 };
 
-export default diffAlgo;
+export default diff;

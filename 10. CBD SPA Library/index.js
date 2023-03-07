@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/extensions
-import Todo from './components/App.js';
+import TodoApp from './components/TodoApp.js';
 
 const $root = document.getElementById('root');
 
-const todo = new Todo($root);
-todo.render();
+const todos = new TodoApp($root);
+todos.init();
