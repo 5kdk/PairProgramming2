@@ -1,7 +1,7 @@
-import Todos from './components/Todos.js';
+// eslint-disable-next-line import/extensions
+import Todo from './components/App.js';
 
 const $root = document.getElementById('root');
 
-document.addEventListener('DOMContentLoaded', () => {
-  const $todos = new Todos();
-});
+const todo = new Todo($root);
+todo.render();

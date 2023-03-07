@@ -1,16 +1,13 @@
-// eslint-disable-next-line import/extensions
-import updateDOM from '../library/diff.js';
+/* eslint-disable import/extensions */
+import TodoInput from './TodoInput.js';
+import TodoList from './TodoList.js';
+import TodoFilter from './TodoFilter.js';
+import diffAlgo from '../library/diff.js';
 
-class Todos {
+class Todo {
   constructor($root) {
     this.$root = $root;
-    this.state = { todos: [], todoFilter: [], currentTodoFilterId: 0 };
-
-    this.initialize();
-  }
-
-  initialize() {
-    this.setState({
+    this.state = {
       todos: [
         { id: 3, content: 'Javascript', completed: false },
         { id: 2, content: 'CSS', completed: true },
@@ -18,27 +15,26 @@ class Todos {
       ],
       todoFilter: ['All', 'Completed', 'Active'],
       currentTodoFilterId: 0,
-    });
+    };
   }
 
   setState(newState) {
     this.state = { ...this.state, ...newState };
+    this.render();
+  }
 
-    const newNodes = this.createDOM(this.state);
+  render() {
+    const newNodes = [
+      new TodoInput(this).getDomEle(),
+      new TodoList(this).getDomEle(),
+      new TodoFilter(this).getDomEle(),
+    ];
     const maxLength = Math.max(newNodes.length, this.$root.childNodes.length);
 
     for (let i = 0; i < maxLength; i++) {
-      updateDOM(this.$root, newNodes[i], this.$root.childNodes[i]);
+      diffAlgo(this.$root, newNodes[i], this.$root.childNodes[i]);
     }
-  }
-
-  createDOM() {
-    const $fragment = document.createElement('div');
-
-    [this.TodoInputEle(), this.todoListEle(), this.todoFilterEle()].forEach(ele => $fragment.appendChild(ele));
-
-    return [...$fragment.childNodes];
   }
 }
 
-export default Todos;
+export default Todo;

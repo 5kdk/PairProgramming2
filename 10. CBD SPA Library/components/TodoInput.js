@@ -1,28 +1,23 @@
-// eslint-disable-next-line import/extensions
-import Todos from './App.js';
-
-class TodoInput extends Todos {
-  constructor() {
-    super();
-
-    this.createEle();
+class TodoInput {
+  constructor(props) {
+    this.props = props;
   }
 
   generateId() {
-    return Math.max(...this.state.todos.map(todo => todo.id), 0) + 1;
+    return Math.max(...this.props.state.todos.map(todo => todo.id), 0) + 1;
   }
 
   addTodo(content) {
-    const newTodo = { id: this.generateId(this.state), content, completed: false };
-    this.setState({ todos: [newTodo, ...this.state.todos] });
+    const newTodo = { id: this.generateId(), content, completed: false };
+    this.props.setState({ todos: [newTodo, ...this.props.state.todos] });
   }
 
-  TodoInputEle() {
-    const $fragment = document.createElement('div');
+  getDomEle() {
+    const $fragment = document.createElement('template');
 
     $fragment.innerHTML = '<input type="text" class="add" placeholder="Enter a task!"></input>';
 
-    $fragment.firstElementChild.onkeydown = e => {
+    $fragment.content.firstElementChild.onkeydown = e => {
       if (e.isComposing || e.keyCode === 229) return;
       if (e.key !== 'Enter' || !e.target.matches('.add')) return;
 
@@ -32,7 +27,7 @@ class TodoInput extends Todos {
       if (content) this.addTodo(content);
     };
 
-    return $fragment.firstElementChild;
+    return $fragment.content.firstElementChild;
   }
 }
 
