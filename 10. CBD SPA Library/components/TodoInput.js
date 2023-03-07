@@ -1,5 +1,9 @@
-class TodoInput {
+// eslint-disable-next-line import/extensions
+import Component from '../core/Component.js';
+
+class TodoInput extends Component {
   constructor(props) {
+    super();
     this.props = props;
   }
 
@@ -12,7 +16,7 @@ class TodoInput {
     this.props.setState({ todos: [newTodo, ...this.props.state.todos] });
   }
 
-  getElements() {
+  render() {
     const $fragment = document.createElement('template');
 
     $fragment.innerHTML = '<input type="text" class="add" placeholder="Enter a task!"></input>';

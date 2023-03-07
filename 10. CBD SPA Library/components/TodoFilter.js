@@ -1,5 +1,9 @@
-class TodoFilter {
+// eslint-disable-next-line import/extensions
+import Component from '../core/Component.js';
+
+class TodoFilter extends Component {
   constructor(props) {
+    super();
     this.props = props;
   }
 
@@ -7,7 +11,7 @@ class TodoFilter {
     this.props.setState({ currentTodoFilterId: +id });
   }
 
-  getElements() {
+  render() {
     const { todoFilter, currentTodoFilterId: filterId } = this.props.state;
     const $fragment = document.createElement('template');
 

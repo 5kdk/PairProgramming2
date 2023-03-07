@@ -1,9 +1,13 @@
-class TodoItem {
+// eslint-disable-next-line import/extensions
+import Component from '../core/Component.js';
+
+class TodoItem extends Component {
   constructor(todo) {
+    super();
     this.todo = todo;
   }
 
-  getDOMString() {
+  render() {
     const $fragment = document.createElement('template');
     const { id, completed, content } = this.todo;
 

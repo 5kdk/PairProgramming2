@@ -3,14 +3,15 @@
   list-style-type: none;
 }
 
-.todo-list>li>span {
+.todo-list > li > span {
   display: inline-block;
-  width: 100px;
+  width: 115px;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.todo-list>li>input[type='checkbox']:checked+span {
+.todo-list > li > input[type='checkbox']:checked + span {
   text-decoration: line-through;
 }
 

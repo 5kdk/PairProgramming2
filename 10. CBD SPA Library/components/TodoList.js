@@ -1,8 +1,10 @@
-// eslint-disable-next-line import/extensions
+/* eslint-disable import/extensions */
+import Component from '../core/Component.js';
 import TodoItem from './TodoItem.js';
 
-class TodoList {
+class TodoList extends Component {
   constructor(props) {
+    super();
     this.props = props;
   }
 
@@ -20,14 +22,14 @@ class TodoList {
     this.props.setState({ todos });
   }
 
-  getElements() {
+  render() {
     const { todos, currentTodoFilterId: filterId } = this.props.state;
     const filtered = todos.filter(todo => (filterId === 2 ? !todo.completed : filterId === 1 ? todo.completed : todo));
     const $fragment = document.createElement('template');
 
     $fragment.innerHTML = `
       <ul class="todo-list">
-        ${filtered.map(todo => new TodoItem(todo).getDOMString()).join('')}
+        ${filtered.map(todo => new TodoItem(todo).render()).join('')}
       </ul>`;
 
     $fragment.content.firstElementChild.onchange = e => {
