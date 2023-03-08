@@ -2,11 +2,6 @@
 import Component from '../core/Component.js';
 
 class TodoInput extends Component {
-  constructor(props) {
-    super();
-    this.props = props;
-  }
-
   generateId() {
     return Math.max(...this.props.state.todos.map(todo => todo.id), 0) + 1;
   }

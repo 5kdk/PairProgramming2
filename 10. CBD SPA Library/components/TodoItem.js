@@ -2,14 +2,9 @@
 import Component from '../core/Component.js';
 
 class TodoItem extends Component {
-  constructor(todo) {
-    super();
-    this.todo = todo;
-  }
-
   render() {
     const $fragment = document.createElement('template');
-    const { id, completed, content } = this.todo;
+    const { id, completed, content } = this.props;
 
     // prettier-ignore
     $fragment.innerHTML = `

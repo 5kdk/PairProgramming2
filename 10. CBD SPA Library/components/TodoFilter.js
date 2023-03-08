@@ -2,11 +2,6 @@
 import Component from '../core/Component.js';
 
 class TodoFilter extends Component {
-  constructor(props) {
-    super();
-    this.props = props;
-  }
-
   filterTodos(id) {
     this.props.setState({ currentTodoFilterId: +id });
   }

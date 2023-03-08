@@ -3,11 +3,6 @@ import Component from '../core/Component.js';
 import TodoItem from './TodoItem.js';
 
 class TodoList extends Component {
-  constructor(props) {
-    super();
-    this.props = props;
-  }
-
   toggleTodo(id) {
     const todos = this.props.state.todos.map(todo =>
       todo.id === +id ? { ...todo, completed: !todo.completed } : todo
