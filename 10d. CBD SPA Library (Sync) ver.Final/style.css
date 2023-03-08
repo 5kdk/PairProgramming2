@@ -1,0 +1,32 @@
+.todo-list {
+  padding: 0;
+  list-style-type: none;
+}
+
+.todo-list > li > span {
+  display: inline-block;
+  width: 115px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.todo-list > li > input[type='checkbox']:checked + span {
+  text-decoration: line-through;
+}
+
+.todo-filter {
+  cursor: pointer;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.active {
+  text-decoration: underline;
+}
+
+.selected {
+  text-decoration: underline;
+}
