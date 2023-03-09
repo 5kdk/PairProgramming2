@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanilla JavaScript Trello</title>
+  <link href="style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <script type="module" src="index.js"></script>
+</head>
+
+<body>
+  <div id="root">
+    <header>
+      <h1>MyTrello</h1>
+    </header>
+
+    <!-- board start -->
+    <div class="board">
+
+      <!-- List 1 -->
+      <div class="list-wrapper">
+        <div class="list-content">
+          <div class="list-header">
+            <h2>Task to Do</h2>
+          </div>
+          <ul class="list">
+            <li class="card">
+              <span>트렐로 존나 혼내주기</span>
+              <input class="hidden" />
+              <i class="bi bi-pencil"></i>
+            </li>
+            <li class="card">
+              <span>가오잡기</span>
+              <input class="hidden" />
+              <i class="bi bi-pencil"></i>
+            </li>
+          </ul>
+          <div class="list-footer">
+            <button class="add-card-btn">+ Add a card</button>
+            <form id="add-card-form" class="hidden">
+              <input type="text" class="card-name-input"></input>
+              <button form="add-card-form">Add list</button>
+              <button class="close">X</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- List 2 -->
+      <div class="list-wrapper">
+        <div class="list-content">
+          <div class="list-header">
+            <h2>Completed</h2>
+          </div>
+          <ul class="list">
+            <li class="card">
+              <span>HTML 연습</span>
+              <input class="hidden"></input>
+              <i class="bi bi-pencil"></i>
+            </li>
+            <li class="card">
+              <span>CSS 공부</span>
+              <input class="hidden"></input>
+              <i class="bi bi-pencil"></i>
+            </li>
+          </ul>
+          <div class="list-footer">
+            <button class="add-card-btn">+ Add a card</button>
+            <form id="add-card-form" class="hidden">
+              <input type="text" class="card-name-input"></input>
+              <button form="add-card-form">Add list</button>
+              <button class="close">X</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- List 3: when empty -->
+      <div class="list-wrapper">
+        <div class="list-content empty">
+          <div class="add-list-txt">+ Add another list</div>
+          <!-- Submit event -> Make new list -->
+          <form id="add-list-form" class="hidden">
+            <input type="text" class="list-name-input"></input>
+            <button form="add-list-form">Add list</button>
+            <button class="close">X</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
