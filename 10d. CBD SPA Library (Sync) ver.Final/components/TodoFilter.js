@@ -2,10 +2,16 @@
 import Component from '../core/Component.js';
 
 class TodoFilter extends Component {
+  filterTodos(e) {
+    if (!e.target.matches('.todo-filter > li')) return;
+
+    this.setState({ currentTodoFilterId: +e.target.dataset.filterId });
+  }
+
   render() {
     const { todoFilter, currentTodoFilterId: filterId } = this.props.state;
 
-    this.addEvent('click', '.todo-filter.', this.props.filterTodos.bind(this.props));
+    this.addEvent('click', '.todo-filter.', this.filterTodos.bind(this.props));
 
     // prettier-ignore
     return `
