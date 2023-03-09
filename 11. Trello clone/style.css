@@ -1,0 +1,156 @@
+:root {
+  --color-white: #fff;
+  --color-black: #000;
+  --color-yellow: #fbd14b;
+  --color-cream: #fffcf0;
+  --color-dark-cream: #e4e0d6;
+  --color-light-purple: #8379c5;
+  --color-main-purple: #6a60a9;
+  --color-dark-purple: #352f58;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-size: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+#root {
+  padding: 0 20px;
+}
+
+body {
+  background-color: var(--color-light-purple)
+}
+
+i {
+  color: var(--color-dark-purple)
+}
+
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: var(--color-main-purple);
+  padding: 20px;
+  margin: 0 -20px 15px;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+
+}
+
+header>h1 {
+  color: var(--color-yellow);
+  margin: 0;
+  font-size: 25px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid var(--color-main-purple);
+  border-radius: 2px;
+}
+
+.board {
+  display: flex;
+}
+
+.list-wrapper {
+  height: 100vh;
+}
+
+.list-content {
+  background-color: var(--color-cream);
+  border-radius: 2px;
+  width: 300px;
+  padding: 5px 10px;
+  box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.3);
+  margin: 3px;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+.list-header {
+  margin: 0 0 5px;
+}
+
+.list-header>h2 {
+  font-size: 16px;
+  color: var(--color-dark-purple)
+}
+
+.list-content>ul>.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px 0;
+  border-radius: 2px;
+  box-shadow: 1px 1px 5px 0 rgba(98, 72, 122, 0.3);
+  background-color: var(--color-white);
+  padding: 5px;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 2px;
+  background-color: transparent;
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+.empty:hover {
+  background-color: var(--color-main-purple);
+}
+
+.list-content>ul>.card>span {
+  font-size: 14px;
+  color: var(--color-dark-purple)
+}
+
+.list-content>ul>.card>i {
+  /* margin: 15px; */
+  font-size: 14px;
+}
+
+.list-content>.list-footer {
+  margin: 5px 0 0;
+  color: var(--color-dark-purple);
+}
+
+.list-content>.list-footer>button {
+  font-size: 14px;
+}
+
+
+.list-content>.list-footer:hover {
+  background-color: var(--color-dark-cream);
+}
+
+.list-content>.list-footer {
+  margin: 5px 0 0;
+}
