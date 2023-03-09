@@ -17,7 +17,7 @@ class App extends Component {
       },
       {
         id: 1,
-        title: '트릴로 조지기',
+        title: 'TRELLO 조지기',
         cards: [
           { cardId: 0, cardTitle: 'Practice Trello', description: '' },
           { cardId: 1, cardTitle: '로고 쓸까말까', description: '' },
@@ -29,7 +29,7 @@ class App extends Component {
         title: '집가서 할거',
         cards: [
           { cardId: 0, cardTitle: 'Practice React', description: '' },
-          { cardId: 1, cardTitle: 'Svelte', description: '스벨트는 언제배운담.........' },
+          { cardId: 1, cardTitle: 'Svelte', description: '스벨트는 언제배운담...' },
           { cardId: 2, cardTitle: 'CSS', description: '사실 CSS가 제일 어려움' },
         ],
         isAdding: false,

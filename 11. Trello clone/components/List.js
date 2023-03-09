@@ -10,7 +10,7 @@ class List extends Component {
     const { id: targetId } = e.target.closest('.list-wrapper').dataset;
     const newLists = this.state.lists.map(list => (list.id === +targetId ? { ...list, isAdding: true } : list));
 
-    this.setState({ lists: newLists });
+    this.setState({ lists: newLists, focusTarget: e.target.parentNode.querySelector('form').id });
   }
 
   closeAddCardForm(e) {
@@ -19,14 +19,11 @@ class List extends Component {
     const { id: targetId } = e.target.closest('.list-wrapper').dataset;
     const newLists = this.state.lists.map(list => (list.id === +targetId ? { ...list, isAdding: false } : list));
 
-    // const newLists = { ...this.state.lists[+targetId], isAdding: false }
-
     this.setState({ lists: newLists });
   }
 
   createNewCard(e) {
     e.preventDefault();
-
     if (!e.target.matches('#add-card-form')) return;
 
     const newCardTitle = e.target.firstElementChild.value.trim();
@@ -41,7 +38,7 @@ class List extends Component {
       list.id === +targetId ? { ...list, cards: [...list.cards, newCard] } : list
     );
 
-    this.setState({ lists: updatedLists });
+    this.setState({ lists: updatedLists, focusTarget: e.target.id });
   }
 
   render() {
@@ -53,7 +50,7 @@ class List extends Component {
 
     // prettier-ignore
     return `
-      ${lists.map(({ id, title, cards, isAdding }) => `
+      ${lists.map(({ id, title, cards, isAdding, focusTarget }) => `
         <div data-id="${id}" class="list-wrapper" draggable="true">
           <div class="list-content">
             <div class="list-header"> 
@@ -64,7 +61,7 @@ class List extends Component {
             </ul>
             <button class="add-card-btn ${isAdding ? 'hidden' : ''}">➕ Add a card</button>
             <form id="add-card-form" class="${isAdding ? '' : 'hidden'}">
-              <input type="text" class="list-name-input">
+              <input type="text" class="list-name-input" ${focusTarget === 'add-card-form' ? 'autofocus' : ''}>
               <button type="submit">Add list</button>
               <button type="button" class="close-add-card">✖️</button>
             </form>

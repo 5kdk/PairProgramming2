@@ -20,7 +20,12 @@ class AddListButton extends Component {
     if (!newListTitle) return;
 
     e.target.firstElementChild.value = '';
-    this.setState({ lists: [...this.state.lists, { title: newListTitle, cards: [], isAdding: false }] });
+
+    const nextListId = Math.max(...this.state.lists.map(list => list.id)) + 1 || 0;
+
+    this.setState({
+      lists: [...this.state.lists, { id: nextListId, title: newListTitle, cards: [], isAdding: false }],
+    });
   }
 
   /* eslint-disable class-methods-use-this */
