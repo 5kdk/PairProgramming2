@@ -15,18 +15,6 @@
   font-size: 16px;
 }
 
-.hidden {
-  display: none;
-}
-
-#root {
-  padding: 0 20px;
-}
-
-body {
-  background-color: var(--color-light-purple)
-}
-
 i {
   color: var(--color-dark-purple)
 }
@@ -38,10 +26,26 @@ ul {
   padding: 0;
 }
 
+.hidden {
+  display: none;
+}
+
+#root {
+  height: 100vh;
+  background-color: var(--color-main-purple);
+}
+
+
 header {
   background-color: var(--color-main-purple);
-  margin: 0 -20px 15px;
   padding: 5px 20px;
+  height: 45px;
+}
+
+header>h1 {
+  color: var(--color-yellow);
+  margin: 0;
+  font-size: 25px;
 }
 
 button {
@@ -49,13 +53,6 @@ button {
   padding: 0;
   border: none;
   background-color: transparent;
-
-}
-
-header>h1 {
-  color: var(--color-yellow);
-  margin: 0;
-  font-size: 25px;
 }
 
 input {
@@ -66,11 +63,15 @@ input {
 }
 
 .board {
+  background-color: var(--color-light-purple);
   display: flex;
+  overflow-x: auto;
+  height: calc(100vh - 45px);
+  padding: 15px;
 }
 
 .list-wrapper {
-  height: 100vh;
+  height: 100%;
 }
 
 .list-content {
