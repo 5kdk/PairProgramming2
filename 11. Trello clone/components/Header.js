@@ -6,8 +6,9 @@ class Header extends Component {
   render() {
     return `
       <header>
-        <h1>MyTrello</h1>
-      </header>`;
+        <h1>⚡ Trello</h1>
+      </header>
+    `;
   }
 }
 

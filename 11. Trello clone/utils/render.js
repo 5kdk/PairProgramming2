@@ -5,7 +5,6 @@ import eventStorage from './eventStorage.js';
 let $root = null;
 
 const bindEvents = () => {
-  // console.log(eventStorage);
   eventStorage.forEach(({ eventType, handler }) => $root.addEventListener(`${eventType}`, handler));
 };
 

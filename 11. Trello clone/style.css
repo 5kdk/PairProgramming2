@@ -1,12 +1,9 @@
 :root {
-  --color-white: #fff;
-  --color-black: #000;
-  --color-yellow: #fbd14b;
-  --color-cream: #fffcf0;
-  --color-dark-cream: #e4e0d6;
-  --color-light-purple: #8379c5;
-  --color-main-purple: #6a60a9;
-  --color-dark-purple: #352f58;
+  --color-white: #f4f5f9;
+  --color-gray: #ebedf1;
+  --color-dark-gray: #dddfe6;
+  --color-black: #252c41;
+  --color-point-red: #f1404b;
 }
 
 * {
@@ -16,7 +13,7 @@
 }
 
 i {
-  color: var(--color-dark-purple)
+  color: var(--color-black)
 }
 
 ol,
@@ -32,18 +29,17 @@ ul {
 
 #root {
   height: 100vh;
-  background-color: var(--color-main-purple);
+  background-color: var(--color-white);
 }
 
-
 header {
-  background-color: var(--color-main-purple);
+  background-color: var(--color-black);
   padding: 5px 20px;
   height: 45px;
 }
 
 header>h1 {
-  color: var(--color-yellow);
+  color: var(--color-white);
   margin: 0;
   font-size: 25px;
 }
@@ -51,19 +47,20 @@ header>h1 {
 button {
   margin: 0;
   padding: 0;
+  font-size: 14px;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 input {
   width: 100%;
-  padding: 15px;
-  border: 2px solid var(--color-main-purple);
+  margin: 10px 0;
+  border: 1.5px solid var(--color-black);
   border-radius: 2px;
 }
 
 .board {
-  background-color: var(--color-light-purple);
   display: flex;
   overflow-x: auto;
   height: calc(100vh - 45px);
@@ -75,32 +72,72 @@ input {
 }
 
 .list-content {
-  background-color: var(--color-cream);
+  background-color: var(--color-gray);
   border-radius: 2px;
   width: 300px;
-  padding: 5px 10px;
-  box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.3);
-  margin: 3px;
+  padding: 10px;
+  box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.3);
+  margin: 5px;
+  cursor: pointer;
 }
 
 .list-header {
-  margin: 0 0 5px;
+  margin: 0 0 10px;
 }
 
 .list-header>h2 {
   font-size: 16px;
-  color: var(--color-dark-purple)
+  color: var(--color-black)
 }
 
 .list-content>ul>.card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 5px 0;
+  margin: 10px 0;
   border-radius: 2px;
   box-shadow: 1px 1px 5px 0 rgba(98, 72, 122, 0.3);
   background-color: var(--color-white);
   padding: 5px;
+}
+
+.list-content>ul>.card>div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list-content>ul>.card>i {
+  display: block;
+}
+
+.list-content>ul>.card>div>span {
+  font-size: 12px;
+  color: var(--color-black)
+}
+
+.list-content>ul>.card>div>i {
+  font-size: 12px;
+  visibility: hidden;
+}
+
+.list-content>ul>.card:hover {
+  background-color: var(--color-dark-gray);
+}
+
+.list-content>ul>.card:hover>div>i {
+  visibility: visible;
+}
+
+
+.list-content>.list-footer {
+  margin: 10px 0 0;
+  color: var(--color-black);
+}
+
+.list-content>.list-footer:hover {
+  background-color: var(--color-dark-gray);
+}
+
+.list-content>.list-footer>.add-card-btn {
+  color: var(--color-point-red);
 }
 
 .empty {
@@ -108,38 +145,30 @@ input {
   align-items: center;
   justify-content: space-between;
   background-color: transparent;
-  color: var(--color-white);
+  color: var(--color-black);
   font-weight: 500;
 }
 
 .empty:hover {
-  background-color: var(--color-main-purple);
+  background-color: var(--color-gray);
 }
 
-.list-content>ul>.card>span {
-  font-size: 12px;
-  color: var(--color-dark-purple)
+.add-list {
+  cursor: auto;
 }
 
-.list-content>ul>.card>i {
-  /* margin: 15px; */
-  font-size: 12px;
+form>button[type="submit"] {
+  padding: 5px;
+  border-radius: 2px;
+  color: var(--color-white);
+  background-color: var(--color-black);
 }
 
-.list-content>.list-footer {
-  margin: 5px 0 0;
-  color: var(--color-dark-purple);
+form>.close {
+  margin-top: 4px;
 }
 
-.list-content>.list-footer>button {
-  font-size: 14px;
-}
-
-
-.list-content>.list-footer:hover {
-  background-color: var(--color-dark-cream);
-}
-
-.list-content>.list-footer {
-  margin: 5px 0 0;
+form>input {
+  margin-top: 0;
+  margin-bottom: 5px;
 }
