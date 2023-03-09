@@ -17,9 +17,9 @@ class App extends Component {
 
   render() {
     return `
-      ${new TodoInput(this)}
-      ${new TodoList(this)}
-      ${new TodoFilter(this)}
+      ${new TodoInput(this).render()}
+      ${new TodoList(this).render()}
+      ${new TodoFilter(this).render()}
     `;
   }
 }
