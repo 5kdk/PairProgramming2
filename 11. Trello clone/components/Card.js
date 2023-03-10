@@ -8,11 +8,10 @@ class Card extends Component {
     return `
       <li data-id="${cardId}" class="card" draggable="true">
         <div>
-          <span>${cardTitle}</span>
-          <input class="hidden" />
+          <span class="card-title">${cardTitle}</span>
           <i class="bi bi-pencil"></i>
         </div>
-        ${description ? '<i class="bi bi-list-nested"></i>' : ''}
+        ${description ? '<div>📝<div>' : ''}
       </li>
     `;
   }

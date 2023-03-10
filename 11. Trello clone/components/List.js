@@ -10,11 +10,11 @@ class List extends Component {
     const { id: targetId } = e.target.closest('.list-wrapper').dataset;
     const newLists = this.state.lists.map(list => (list.id === +targetId ? { ...list, isAdding: true } : list));
 
-    this.setState({ lists: newLists, focusTarget: e.target.parentNode.querySelector('form').id });
+    this.setState({ lists: newLists });
   }
 
   closeAddCardForm(e) {
-    if (!e.target.matches('.close-add-card')) return;
+    if (!e.target.matches('.add-card>button[type="button"]')) return;
 
     const { id: targetId } = e.target.closest('.list-wrapper').dataset;
     const newLists = this.state.lists.map(list => (list.id === +targetId ? { ...list, isAdding: false } : list));
@@ -24,7 +24,7 @@ class List extends Component {
 
   createNewCard(e) {
     e.preventDefault();
-    if (!e.target.matches('#add-card-form')) return;
+    if (!e.target.matches('.add-card')) return;
 
     const newCardTitle = e.target.firstElementChild.value.trim();
     if (!newCardTitle) return;
@@ -38,20 +38,20 @@ class List extends Component {
       list.id === +targetId ? { ...list, cards: [...list.cards, newCard] } : list
     );
 
-    this.setState({ lists: updatedLists, focusTarget: e.target.id });
+    this.setState({ lists: updatedLists });
   }
 
   render() {
     const { lists } = this.props.state;
 
     this.addEvent('click', '.add-card-btn', this.displayAddCardForm.bind(this.props));
-    this.addEvent('click', '.close-add-card', this.closeAddCardForm.bind(this.props));
-    this.addEvent('submit', '#add-card-form', this.createNewCard.bind(this.props));
+    this.addEvent('click', '.add-card>button[type="button"]', this.closeAddCardForm.bind(this.props));
+    this.addEvent('submit', '.add-card', this.createNewCard.bind(this.props));
 
     // prettier-ignore
     return `
-      ${lists.map(({ id, title, cards, isAdding, focusTarget }) => `
-        <div data-id="${id}" class="list-wrapper" draggable="true">
+      ${lists.map(({ id, title, cards, isAdding }) => `
+        <div class="list-wrapper" data-id="${id}" draggable="true">
           <div class="list-content">
             <div class="list-header"> 
               <h2>${title}</h2>
@@ -60,10 +60,10 @@ class List extends Component {
               ${cards.map(card => new Card(card).render()).join('')}
             </ul>
             <button class="add-card-btn ${isAdding ? 'hidden' : ''}">➕ Add a card</button>
-            <form id="add-card-form" class="${isAdding ? '' : 'hidden'}">
-              <input type="text" class="list-name-input" ${focusTarget === 'add-card-form' ? 'autofocus' : ''}>
+            <form class="add-form add-card ${isAdding ? '' : 'hidden'}">
+              <textarea placeholder="Enter a new title."></textarea>
               <button type="submit">Add list</button>
-              <button type="button" class="close-add-card">✖️</button>
+              <button type="button">✖️</button>
             </form>
           </div>
         </div>`).join('')}
@@ -72,3 +72,5 @@ class List extends Component {
 }
 
 export default List;
+
+// ${isEditingTitle ? '<input type="text" class="hidden" />' : `<h2>${title}</h2>`}

@@ -7,14 +7,14 @@ class AddListButton extends Component {
   }
 
   closeAddListForm(e) {
-    if (!e.target.matches('.add-list-close')) return;
+    if (!e.target.matches('.add-list>button[type="button"]')) return;
 
     this.setState({ isAddingList: false });
   }
 
   createNewList(e) {
     e.preventDefault();
-    if (!e.target.matches('#add-new-list')) return;
+    if (!e.target.matches('.add-list')) return;
 
     const newListTitle = e.target.firstElementChild.value.trim();
     if (!newListTitle) return;
@@ -28,22 +28,21 @@ class AddListButton extends Component {
     });
   }
 
-  /* eslint-disable class-methods-use-this */
   render() {
     const { isAddingList } = this.props.state;
 
     this.addEvent('click', '.empty', this.displayAddListForm.bind(this.props));
-    this.addEvent('submit', '#add-new-list', this.createNewList.bind(this.props));
-    this.addEvent('click', '.add-list-close', this.closeAddListForm.bind(this.props));
+    this.addEvent('click', '.add-list>button[type="button"]', this.closeAddListForm.bind(this.props));
+    this.addEvent('submit', '.add-list', this.createNewList.bind(this.props));
 
     return `
       <div class="list-wrapper">
         <div class="list-content add-list ${isAddingList ? '' : 'empty'}">
-          <div class="add-list-txt ${isAddingList ? 'hidden' : ''}">➕ Add another list</div>
-          <form id="add-new-list" class="${isAddingList ? '' : 'hidden'}" >
-            <input type="text" class="new-list-name-input">
+          <div class="add-list-btn ${isAddingList ? 'hidden' : ''}">➕ Add another list</div>
+          <form class="add-form add-list ${isAddingList ? '' : 'hidden'}">
+            <textarea placeholder="Enter a new title."></textarea>
             <button type="submit">Add list</button>
-            <button type="button" class="add-list-close">✖️</button>  
+            <button type="button">✖️</button>
           </form>
         </div>
       </div>`;

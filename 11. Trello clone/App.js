@@ -36,7 +36,6 @@ class App extends Component {
       },
     ],
     isAddingList: false,
-    targetFocus: null,
   };
 
   // prettier-ignore
