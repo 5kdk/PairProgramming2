@@ -13,7 +13,6 @@ class TodoInput extends Component {
     this.setState({ todos: [newTodo, ...this.state.todos] });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   render() {
     this.addEvent('keydown', '.add', this.addTodo.bind(this.props));
 
