@@ -9,7 +9,14 @@ const bindEvents = () => {
 };
 
 const render = (newDOMStr, $container) => {
-  if (!$root) $root = $container;
+  if (!$root) {
+    $container.innerHTML = newDOMStr;
+    $root = $container;
+
+    bindEvents();
+
+    return;
+  }
 
   const virtualDOM = $root.cloneNode(true);
   virtualDOM.innerHTML = newDOMStr;
